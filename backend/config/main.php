@@ -7,16 +7,30 @@ $params = array_merge(
 );
 
 return [
+   'language' => 'ru-RU',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+    'i18n' => [
+        'translations' => [
+            'common*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@app/messages',
+                //'sourceLanguage' => 'en-US',
+             //   'fileMap' => [
+//                    'app' => 'app.php',
+//                    'app/error' => 'error.php',
+//                ],
+            ],
+        ],
+    ],
      'view' => [
          'theme' => [
              'pathMap' => [
-                '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+                '@app/views' => '@app/views/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
              ],
          ],
     ],

@@ -5,5 +5,7 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        
     ],
+    'name'=>'Админ часть Доминанта',
 ];
