@@ -4,6 +4,9 @@ namespace backend\models;
 
 use Yii;
 
+use yii\base\Model;
+//use common\models\User;
+
 /**
  * This is the model class for table "user".
  *
@@ -32,15 +35,22 @@ class User extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
+          return [
+            [['username','email', 'password_hash'], 'required'],
+            [['username', 'password_hash', 'email'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
+ 
         ];
+      //  return [
+//            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+//            [['status', 'created_at', 'updated_at'], 'integer'],
+//            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+//            [['auth_key'], 'string', 'max' => 32],
+//            [['username'], 'unique'],
+//            [['email'], 'unique'],
+//            [['password_reset_token'], 'unique'],
+//        ];
     }
 
     /**
@@ -59,5 +69,25 @@ class User extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+    
+    /**
+     * Signs user up.
+     *
+     * @return User|null the saved model or null if saving fails
+     */
+    public function signup()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+        
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+        
+        return $user->save() ? $user : null;
     }
 }
