@@ -6,14 +6,25 @@ class m161207_035002_create_table_rooms extends Migration
 {
     public function up()
     {
-
+          $this->createTable('rooms', [
+            'id' => $this->primaryKey(),
+            'price'=>'integer',
+            'own_or_business'=>'boolean',
+            'square'=>'integer',
+            'district'=>'string',
+            'street'=>'string',
+            'description'=>'text',
+            'shortdistrict'=>'string',
+            'manager'=>'integer',
+            'coment'=>'integer',
+            'url'=>'text',
+            'site'=>'string',
+        ]);  
     }
 
     public function down()
     {
-        echo "m161207_035002_create_table_rooms cannot be reverted.\n";
-
-        return false;
+       $this->dropTable('rooms');
     }
 
     /*
