@@ -25,30 +25,7 @@ use yii\helpers\Url;
     <div class="">
    
     <?php //Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) ?>
-     <?php Pjax::begin(['id' => 'admin-crud-id', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]) ?>
-       <p>Свойства</p>            
-  <table class="table table-bordered">
-    <tbody>
- 
-      <tr>
-        <td>Найдено новых</td>
-         <td><?= $new_urls; ?></td>
-       
-      </tr>
-      <tr>
-      <td>Sesion val</td>
-       
-        <td> <?= Yii::$app->session->get('votes', 0) ?> </td>
-       
-      </tr>
 
-    </tbody>
-  </table>
-<?= Html::a("Начать поиск", ['parser/search_new'], ['class' => 'btn btn-lg btn-primary'],['data-pjax'=>1]) ?>
-<?php //Html::a("Загрузить", ['parser/parse'], ['class' => 'btn btn-lg btn-primary'],['data-pjax'=>1]) ?>
-
-<h1>ToDO:  <?= $total ?></h1>
-<?php Pjax::end(); ?>
       
     </div>
     
@@ -56,7 +33,7 @@ use yii\helpers\Url;
    
    
      <?php Pjax::begin(['id' => 'admin-crud-id2', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST','async'=>false,]]) ?>
-       <p>Свойства2</p>            
+        <hr />     
   <table class="table table-bordered">
     <tbody>
        <tr>
@@ -112,10 +89,11 @@ function timer_parse_urls_start(e){
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
           e.preventDefault();
           stop();
+               $('#status').text('Обработка');
 timerIdParse = setInterval(function() {
      e.preventDefault();
-     $link = $(e.target),
-      callUrl=$link.attr('href'),
+     $link = $(e.target);
+      callUrl=$link.attr('href');
          ajaxRequest = $.ajax({
         type: "post",
         dataType: 'json',
@@ -132,15 +110,18 @@ timerIdParse = setInterval(function() {
 }
 
 function timer_colect_urls_start(e){
-          page_limit=3;
+          page_limit=5;
        
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
           e.preventDefault();
+          
           stop();
+          $('#status').text('Обработка');
 timerId = setInterval(function() {
       e.preventDefault();
-       if( (page_limit--)<=0 ){stop();}
-      callUrl='/index.php?r=parser/colecturls';
+       $link = $(e.target);
+       if( (page_limit--)<=0 ){stop(); console.log('stop page limit') }
+        callUrl=$link.attr('href');
          ajaxRequest = $.ajax({
         type: "post",
         dataType: 'json',
