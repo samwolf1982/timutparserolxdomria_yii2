@@ -3,12 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\User;
+use common\models\User;
 use backend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\db\Expression;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -36,7 +35,6 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -65,46 +63,15 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        
-        
         $model = new User();
-        if ($model->load(Yii::$app->request->post())){
-            
-         $model->password_hash=Yii::$app->security->generatePasswordHash($model->password_hash);;
-         $model->auth_key = Yii::$app->security->generateRandomString();
-          $model->created_at = new Expression('NOW()');
-         $model->updated_at= new Expression('NOW()');
-         
-         
-             if ( $model->save() ) {
-    
-   
- 
-    
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
-            
-            
-        }
-        else{
-             return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-        
-
-
-       // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        } else {
-//            return $this->render('create', [
-//                'model' => $model,
-//            ]);
-//        }
     }
 
     /**
