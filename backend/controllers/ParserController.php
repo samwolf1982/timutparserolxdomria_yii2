@@ -123,15 +123,50 @@ class ParserController extends \yii\web\Controller
 
                     // prepare to db
                     $ownbis = isset($details2['Объявление от']) ? $details2['Объявление от'] :
-                        'Не определено'; if (isset($details2['Общая площадь'])) {
+                        'Не определено';
+                        
+                         if (isset($details2['Общая площадь'])) {
 
                         $details2['Общая площадь'] = str_replace('м2', '', $details2['Общая площадь']);
-                            $square = preg_replace('/[^0-9]+/', '', $details2['Общая площадь']); $square =
-                            intval($square); }
+                        $square = preg_replace('/[^0-9]+/', '', $details2['Общая площадь']);
+                         $square =intval($square);
+                          }
                 else {
                     $square = 0; }
+                    
+                    
+                       if (isset($details2['Количество комнат'])) {
+                         $coun_rooms=preg_replace('/[^0-9]+/', '', $details2['Количество комнат']);
+                              
+                         $coun_rooms =intval($coun_rooms);
+                          }
+                else {
+                    $coun_rooms = 0; }
+                    
+                    
+                     if (isset($details2['Этаж'])) {
+                         $floor=preg_replace('/[^0-9]+/', '', $details2['Этаж']);
+                         $floor =intval($floor);
+                          }
+                else {
+                    $floor = 0; }
+                    
+                    
+                       if (isset($details2['Этажность дома'])) {
+                         $floors=preg_replace('/[^0-9]+/', '', $details2['Этажность дома']);
+                         $floors =intval($floors);
+                          }
+                else {
+                    $floors = $floor; }
+                    
+                    
+                    
+                    
+                    
+                    
                 $manager = '********'; $coment = '********'; $site = 'OLX'; if (!isset($address[0]))
-                    $address[0] = 'Не определен'; if (!isset($address[1]))$address[1] =
+                    $address[0] = 'Не определен';
+                     if (!isset($address[1]))$address[1] =
                     'Не определен'; if (!isset($address[2]))$address[2] = 'Не определен'; $imgarr =
                     json_encode($imgarr, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |
                     JSON_UNESCAPED_UNICODE); //     fill to db
@@ -140,12 +175,30 @@ class ParserController extends \yii\web\Controller
 
                 $count = Rooms::find()->where(['url' => $path_site['url']])->count(); if ($count ==
                     0) {
-                    $contact = new Rooms(); $contact->price = $path_site['price']; $contact->
-                        own_or_business = $ownbis; $contact->square = $square; $contact->district = $address[0];
-                        $contact->street = $address[2]; $contact->description = $desc; $contact->
-                        shortdistrict = $title; $contact->manager = $manager; $contact->coment = $coment;
-                        $contact->url = $path_site['url']; $contact->site = $site; $contact->img = $imgarr;
-                        $contact->save(); $welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
+                    $contact = new Rooms();
+                     $contact->price = $path_site['price'];
+                      $contact-> own_or_business = $ownbis;
+                       $contact->square = $square;
+                        $contact->district = $address[0];
+                        $contact->street = $address[2];
+                         $contact->description = $desc;
+                          $contact->shortdistrict = $title;
+                         $contact->manager = $manager;
+                          $contact->coment = $coment;
+                        $contact->url = $path_site['url'];
+                         $contact->site = $site;
+                          $contact->img = $imgarr;
+                          $contact->currency='грн';
+                          
+                          $contact->floor=$floor;
+                          $contact->floors=$floors;
+                          $contact->type='кирпич';
+                          
+                          
+                         $contact->count_rooms=$coun_rooms;
+                        $contact->save();
+                        
+                         $welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
                         Yii::$app->session->set('welldone', $welldone); }
                 $welldone = Yii::$app->session->get('welldone', 0); $res = array(
 

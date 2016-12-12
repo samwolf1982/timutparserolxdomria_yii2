@@ -17,19 +17,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'shortdistrict') ?>
+
     <?= $form->field($model, 'price') ?>
 
-    <?= $form->field($model, 'own_or_business') ?>
+    <?= $form->field($model, 'currency') ?>
 
-    <?= $form->field($model, 'square') ?>
+    <?= $form->field($model, 'count_rooms') ?>
 
-    <?= $form->field($model, 'district') ?>
+    <?php // echo $form->field($model, 'square') ?>
+
+    <?php // echo $form->field($model, 'floor') ?>
+
+    <?php // echo $form->field($model, 'floors') ?>
+
+    <?php // echo $form->field($model, 'type') ?>
+
+    <?php // echo $form->field($model, 'district') ?>
 
     <?php // echo $form->field($model, 'street') ?>
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'shortdistrict') ?>
+    <?php // echo $form->field($model, 'own_or_business') ?>
 
     <?php // echo $form->field($model, 'manager') ?>
 
@@ -38,6 +48,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'url') ?>
 
     <?php // echo $form->field($model, 'site') ?>
+
+    <?php // echo $form->field($model, 'img') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

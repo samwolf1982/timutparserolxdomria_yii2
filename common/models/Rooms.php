@@ -8,13 +8,18 @@ use Yii;
  * This is the model class for table "rooms".
  *
  * @property integer $id
+ * @property string $shortdistrict
  * @property integer $price
- * @property string $own_or_business
+ * @property string $currency
+ * @property integer $count_rooms
  * @property integer $square
+ * @property integer $floor
+ * @property integer $floors
+ * @property string $type
  * @property string $district
  * @property string $street
  * @property string $description
- * @property string $shortdistrict
+ * @property string $own_or_business
  * @property string $manager
  * @property string $coment
  * @property string $url
@@ -37,9 +42,9 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'square'], 'integer'],
+            [['price', 'count_rooms', 'square', 'floor', 'floors'], 'integer'],
             [['description', 'url', 'img'], 'string'],
-            [['own_or_business', 'district', 'street', 'shortdistrict', 'manager', 'coment', 'site'], 'string', 'max' => 255],
+            [['shortdistrict', 'currency', 'type', 'district', 'street', 'own_or_business', 'manager', 'coment', 'site'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,13 +55,18 @@ class Rooms extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'shortdistrict' => 'Shortdistrict',
             'price' => 'Price',
-            'own_or_business' => 'Own Or Business',
+            'currency' => 'Currency',
+            'count_rooms' => 'Count Rooms',
             'square' => 'Square',
+            'floor' => 'Floor',
+            'floors' => 'Floors',
+            'type' => 'Type',
             'district' => 'District',
             'street' => 'Street',
             'description' => 'Description',
-            'shortdistrict' => 'Shortdistrict',
+            'own_or_business' => 'Own Or Business',
             'manager' => 'Manager',
             'coment' => 'Coment',
             'url' => 'Url',

@@ -35,13 +35,9 @@ class RoomsController extends Controller
      */
     public function actionIndex()
     {
-        //   print_r(Yii::$app->request->queryParams);
-//         die();
         $searchModel = new RoomsSearch();
-       
-         
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

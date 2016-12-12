@@ -18,8 +18,8 @@ class RoomsSearch extends Rooms
     public function rules()
     {
         return [
-            [['id', 'price', 'own_or_business', 'square', 'manager', 'coment'], 'integer'],
-            [['district', 'street', 'description', 'shortdistrict', 'url', 'site'], 'safe'],
+            [['id', 'count_rooms', 'square', 'floor', 'floors'], 'integer'],
+            [['shortdistrict','price', 'currency', 'type', 'district', 'street', 'description', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img'], 'safe'],
         ];
     }
 
@@ -60,19 +60,36 @@ class RoomsSearch extends Rooms
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'price' => $this->price,
-            'own_or_business' => $this->own_or_business,
+           // 'price' => $this->price,
+            'count_rooms' => $this->count_rooms,
             'square' => $this->square,
-            'manager' => $this->manager,
-            'coment' => $this->coment,
+            'floor' => $this->floor,
+            'floors' => $this->floors,
         ]);
+        
+        //      search price
+          if(!empty($this->price) && strpos($this->price, '-') !== false)
+         { 
+            list($start_data, $end_data) = explode('-', $this->price);
+             $query->andFilterWhere(['between', 'price', $start_data, $end_data]);
+              }
+        
+        
 
-        $query->andFilterWhere(['like', 'district', $this->district])
+        $query->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
+            ->andFilterWhere(['like', 'currency', $this->currency])
+            ->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'district', $this->district])
             ->andFilterWhere(['like', 'street', $this->street])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
+            ->andFilterWhere(['like', 'own_or_business', $this->own_or_business])
+            ->andFilterWhere(['like', 'manager', $this->manager])
+            ->andFilterWhere(['like', 'coment', $this->coment])
             ->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'site', $this->site]);
+            ->andFilterWhere(['like', 'site', $this->site])
+            ->andFilterWhere(['like', 'img', $this->img]);
+            
+             $query->orderBy([ 'id' => SORT_DESC,]);
 
         return $dataProvider;
     }

@@ -46,7 +46,7 @@ use yii\helpers\Url;
       </tr>
       
         <tr>
-        <td>Собрано</td>
+        <td>Собрано ссылок</td>
          <td id="colected"> 0 </td>     
       </tr>
         <tr>
