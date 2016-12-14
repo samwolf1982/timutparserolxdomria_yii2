@@ -192,7 +192,25 @@ class ParserController extends \yii\web\Controller
                           
                           $contact->floor=$floor;
                           $contact->floors=$floors;
-                          $contact->type='кирпич';
+                          $contact->type='-----';
+                          
+                          
+                              $contact->phone='-----';
+                                        
+               if($square==0 || empty($square)||empty($path_site['price'])){$price_m=0;}
+               else{
+                 //$price_m=  $contact->price/$contact->square;
+                $price_m= intval($path_site['price'])/intval($square);
+                
+                
+                
+ //$price_m=  999;
+               }
+                                       
+                              
+                                 $contact->price_m=(int) $price_m;
+                                  $contact->state='Состояние';
+                          
                           
                           
                          $contact->count_rooms=$coun_rooms;

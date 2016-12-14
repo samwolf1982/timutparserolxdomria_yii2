@@ -12,8 +12,33 @@ use common\models\Rooms;
 /* @var $searchModel app\models\RoomsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Rooms';
+$this->title = "Rooms";
+
 $this->params['breadcrumbs'][] = $this->title;
+
+
+//$db=Rooms::getDb();
+//$count_room = $db->cache(function ($db) {
+//
+//    // Результат SQL запроса будет возвращен из кэша если
+//    // кэширование запросов включено и результат запроса присутствует в кэше
+//    return ArrayHelper::map( Rooms::find()->select('count_rooms')->orderBy('count_rooms')->asArray()->all(), 'count_rooms', 'count_rooms');  
+//
+//});
+
+
+//if(){
+//    
+//}
+
+
+
+
+    
+ 
+//$params=Rooms::find()->select('count_rooms')->orderBy('count_rooms')->asArray()->all();
+//\Yii::info("own: ", var_dump($params,true));
+
 ?>
 <div class="rooms-index">
 
@@ -23,12 +48,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Rooms', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'responsive'=>true,
         'resizableColumns'=>true,
     'hover'=>true,
+    'pjax'=>false,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true,
+        'beforeGrid'=>'My fancy content before.',
+        'afterGrid'=>'My fancy content after.',
+    ],
         //'hover'=>true,
         'exportConfig'=>[ 
  GridView::CSV => [
@@ -58,15 +89,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-home"></i> Квартиры</h3>',
         'type'=>'success',
         'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset Grid', ['index'], ['class' => 'btn btn-info']),
-        'footer'=>false
+        'footer'=>true,
     ],
         'columns' => [
-           // ['class' => 'yii\grid\SerialColumn'],
-           
+        
+           ['class' => 'yii\grid\ActionColumn']
+,
 
-           
-           
-           
+
+      
            
            
            
@@ -77,30 +108,122 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'id', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
             'contentOptions' => 
             ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+ white-space: -moz-pre-wrap;
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
             ],
+            
+            
+              'date',
+            
+            
+                [
+            'attribute'=>'count_rooms', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->count_rooms;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+   
+   'filter'=>  $count_room,         
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Комнаты']
+        ],
+            
+            
+                                                                                    
+            
+            
+           [
+           'label'=>'SITE',
+           'format' => 'raw',
+       'value'=>function ($data) {
+             return Html::a($data->site,$data->url);
+        },
+    ], 
+                
                  [
             'attribute'=>'shortdistrict', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
+
             'contentOptions' => 
             ['style'=>'max-width: 350px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
            
-           // 'perfectScrollbar'=>true,
+        
             ],
+            
+           
+            
+                     [
+            'attribute'=> 'phone', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            
+            'contentOptions' => 
+            ['style'=>'max-width: 350px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+           
+        
+            ],
+            
+            
+            
+            
+            
+                       [
+            'attribute'=>'district', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->district;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+   
+   'filter'=>  $district,         
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Районы']
+        ],
+            
+            
+            
+            
+              
+                 [
+            'attribute'=>'street', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            
+            'contentOptions' => 
+            ['style'=>'min-width: 120px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+           
+        
+            ],
+            
+            
+            
+            
           
             
             
@@ -108,187 +231,214 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'price',
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
+            
             'contentOptions' => 
-            ['style'=>'max-width: 350px;     max-height: 120px;  overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+            ['style'=>'min-width: 140px;     max-height: 120px;  overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
            
-           // 'perfectScrollbar'=>true,
+           
             ],
             
-                           [
+            
+            
+     
+       
+                       [
             'attribute'=>'currency', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->currency;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+   
+   'filter'=>  $currency,         
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Валюта']
+        ],
+     
+     
+     
+     
+     [
+            'attribute'=>'price_m',
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
-            ],
             
-                            [
-            'attribute'=>'count_rooms', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
             'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+            ['style'=>'min-width: 90px;     max-height: 120px;  overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
+           
+           
             ],
+     
+          
+            
+      
+            
+            
              'square',
              
-                                        [
+        [
             'attribute'=>'floor', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->floor;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+           // 'filter'=>ArrayHelper::map(Rooms::find()->select('floor')->orderBy('floor')->asArray()->all(), 'floor', 'floor'), 
+            'filter'=>$floor,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
             ],
+            'filterInputOptions'=>['placeholder'=>'Этаж']
+        ],
             
-                                       [
+            
+         [
             'attribute'=>'floors', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->floors;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+     // 'filter'=>ArrayHelper::map(Rooms::find()->select('floors')->orderBy('floors')->asArray()->all(), 'floors', 'floors'), 
+            'filter'=>$floors,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
             ],
+            'filterInputOptions'=>['placeholder'=>'Этажность']
+        ],
             
-                                            [
+            
+                 [
             'attribute'=>'type', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->type;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+     // 'filter'=>ArrayHelper::map(Rooms::find()->select('floors')->orderBy('floors')->asArray()->all(), 'floors', 'floors'), 
+            'filter'=>$type,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
             ],
+            'filterInputOptions'=>['placeholder'=>'Тип']
+        ],
+            
+            
+            
+        
             
               [
             'attribute'=>'description', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
+            
             'contentOptions' => 
             ['style'=>'max-width: 350px;     max-height: 120px;  width: 200px;
     height: 100px; overflow: hidden;  white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
            
-           // 'perfectScrollbar'=>true,
+           
             ],
-                
+            'state'
+            ,
+                      [
+            'attribute'=>'own_or_business', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->own_or_business;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+           // 'filter'=>ArrayHelper::map(Rooms::find()->select('own_or_business')->orderBy('own_or_business')->asArray()->all(), 'own_or_business', 'own_or_business'), 
+            'filter'=>$own_or_business,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Any category']
+        ],
     
             
-                                                [
-            'attribute'=>'own_or_business', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
-            ],
             
-            
-                                                [
+               [
             'attribute'=>'manager', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
-            //the line below has solved the issue
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
- word-wrap: break-word; ']
-            ,
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->manager;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+           // 'filter'=>ArrayHelper::map(Rooms::find()->select('own_or_business')->orderBy('own_or_business')->asArray()->all(), 'own_or_business', 'own_or_business'), 
+            'filter'=>$manager,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
             ],
+            'filterInputOptions'=>['placeholder'=>'Менеджер']
+        ],
+     
+            
+     
             
                                                 [
             'attribute'=>'coment', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
-            //the line below has solved the issue
+            
             'contentOptions' => 
             ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
- white-space: -moz-pre-wrap; /* Mozilla, начиная с 1999 года */
- white-space: -pre-wrap; /* Opera 4-6 */
- white-space: -o-pre-wrap; /* Opera 7 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
  word-wrap: break-word; ']
             ,
             ],
             
-                                                   
-                                                      [
-           'label'=>'SITE',
-           'format' => 'raw',
-       'value'=>function ($data) {
-             return Html::a($data->site,$data->url);
-        },
-    ],
+                                                          [
+            'attribute'=>'img', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            
+            'contentOptions' => 
+            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+            ],
+                                                                      [
+            'attribute'=>'url', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            
+            'contentOptions' => 
+            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+            ],                                    
+    
             
             
-                 [
-            'class' => 'kartik\grid\ExpandRowColumn',
-            'expandOneOnly' => false,
-            'value' => function ($model, $key, $index, $column) {
-                return GridView::ROW_COLLAPSED;
-            },
-            'detail' => function ($model, $key, $index, $column) {                                        
-                return   $model->img   ;
-            },
+          
 
-        ],
-
-            // 'floor',
-            // 'floors',
-            // 'type',
-            // 'district',
-            // 'street',
-            // 'description:ntext',
-            // 'own_or_business',
-            // 'manager',
-            // 'coment',
-            // 'url:ntext',
-            // 'site',
-            // 'img:ntext',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+
+
+</div>

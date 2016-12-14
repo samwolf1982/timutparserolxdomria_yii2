@@ -4,16 +4,23 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Rooms;
-use backend\models\RoomsSearch;
+use app\models\RoomsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+
+use yii\helpers\ArrayHelper;
 
 /**
  * RoomsController implements the CRUD actions for Rooms model.
  */
 class RoomsController extends Controller
 {
+    
+    
+    
+   // public $demoval;
     /**
      * @inheritdoc
      */
@@ -36,12 +43,86 @@ class RoomsController extends Controller
     public function actionIndex()
     {
         $searchModel = new RoomsSearch();
+        
+      
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+          //\Yii::info("own: ", var_dump($dataProvider,true));
+        
+    
+        $db=Rooms::getDb();
+$count_room = $db->cache(function ($db) {
+
+    // Результат SQL запроса будет возвращен из кэша если
+    // кэширование запросов включено и результат запроса присутствует в кэше
+    return ArrayHelper::map( Rooms::find()->select('count_rooms')->orderBy('count_rooms')->asArray()->all(), 'count_rooms', 'count_rooms');  
+
+});
+
+$floor = $db->cache(function ($db) {
+
+    // Результат SQL запроса будет возвращен из кэша если
+    // кэширование запросов включено и результат запроса присутствует в кэше
+    return ArrayHelper::map( Rooms::find()->select('floor')->orderBy('floor')->asArray()->all(), 'floor', 'floor');  
+
+});
+
+$floors = $db->cache(function ($db) {
+
+    // Результат SQL запроса будет возвращен из кэша если
+    // кэширование запросов включено и результат запроса присутствует в кэше
+    return ArrayHelper::map( Rooms::find()->select('floors')->orderBy('floors')->asArray()->all(), 'floors', 'floors');  
+
+});
+   
+   $own_or_business = $db->cache(function ($db) {
+
+    // Результат SQL запроса будет возвращен из кэша если
+    // кэширование запросов включено и результат запроса присутствует в кэше
+    return ArrayHelper::map( Rooms::find()->select('own_or_business')->orderBy('own_or_business')->asArray()->all(), 'own_or_business', 'own_or_business');  
+
+});
+
+
+
+   $district = $db->cache(function ($db) {
+
+    // Результат SQL запроса будет возвращен из кэша если
+    // кэширование запросов включено и результат запроса присутствует в кэше
+    return ArrayHelper::map( Rooms::find()->select('district')->orderBy('district')->asArray()->all(), 'district', 'district');  
+
+});
+
+
+   $currency = $db->cache(function ($db) {
+    return ArrayHelper::map( Rooms::find()->select('currency')->orderBy('currency')->asArray()->all(), 'currency', 'currency');  
+});
+   //$currency = ArrayHelper::map( Rooms::find()->select('currency')->orderBy('currency')->asArray()->all(), 'currency', 'currency');  
+   $type = $db->cache(function ($db) {
+    return ArrayHelper::map( Rooms::find()->select('type')->orderBy('type')->asArray()->all(), 'type', 'type');  
+});
+
+   $manager = $db->cache(function ($db) {
+    return ArrayHelper::map( Rooms::find()->select('manager')->orderBy('manager')->asArray()->all(), 'manager', 'manager');  
+});
+
+
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'count_room'=>$count_room,
+            'floor'=>$floor,
+             'floors'=>$floors,
+             'own_or_business'=>$own_or_business,
+             'district'=>$district,
+             'currency'=>$currency,
+             'type'=>$type,
+             'manager'=>$manager,
+             
+            
         ]);
+       
     }
 
     /**
@@ -51,8 +132,10 @@ class RoomsController extends Controller
      */
     public function actionView($id)
     {
+        //$this->demoval='sexy';
         return $this->render('view', [
             'model' => $this->findModel($id),
+          //  'demoval'=> $this->demoval,
         ]);
     }
 

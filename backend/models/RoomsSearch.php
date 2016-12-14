@@ -1,12 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace app\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Rooms;
 
+
+
+use yii\helpers\BaseVarDumper;
 /**
  * RoomsSearch represents the model behind the search form about `common\models\Rooms`.
  */
@@ -18,8 +21,8 @@ class RoomsSearch extends Rooms
     public function rules()
     {
         return [
-            [['id', 'count_rooms', 'square', 'floor', 'floors'], 'integer'],
-            [['shortdistrict','price', 'currency', 'type', 'district', 'street', 'description', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img'], 'safe'],
+            [['id', 'count_rooms', 'floor', 'floors'], 'integer'],
+            [['shortdistrict', 'price' , 'square' , 'price_m', 'phone', 'currency', 'type', 'district', 'street', 'description', 'state', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img','date'], 'safe'],
         ];
     }
 
@@ -45,10 +48,20 @@ class RoomsSearch extends Rooms
 
         // add conditions that should always apply here
 
+//$test='mimim';
+//\Yii::info("own: ", var_dump($params,true));
+//  $dumper = new yii\helpers\BaseVarDumper();
+//    echo $dumper::dump($test, 10, true);
+
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+              'pagination'=>array(
+        'pageSize'=>10,
+    ),
         ]);
-
+       // var_dump($params);
+         //    die();
         $this->load($params);
 
         if (!$this->validate()) {
@@ -58,38 +71,74 @@ class RoomsSearch extends Rooms
         }
 
         // grid filtering conditions
+        
+        
+          
+        
+                      if(preg_match("/^[0-9]+-[0-9]+/", $this->price)){
+                        list($min_p, $max_p) = explode("-", $this->price, 2);
+                         $query->andFilterWhere(['between', 'price', $min_p,$max_p]);
+                        
+                      }else{
+                           $query->andFilterWhere([ 'price' => $this->price,]);
+                      }
+                      
+                      if(preg_match("/^[0-9]+-[0-9]+/", $this->price_m)){
+                        list($min_p2, $max_p2) = explode("-", $this->price_m, 2);
+                         $query->andFilterWhere(['between', 'price_m', $min_p2,$max_p2]);
+                        
+                      }else{
+                           $query->andFilterWhere([ 'price_m' => $this->price_m,]);
+                      }
+                      
+                      
+                        if(preg_match("/^[0-9]+-[0-9]+/", $this->square)){
+                        list($min_p2, $max_p2) = explode("-", $this->square, 2);
+                         $query->andFilterWhere(['between', 'square', $min_p2,$max_p2]);
+                        
+                      }else{
+                           $query->andFilterWhere([ 'square' => $this->square,]);
+                      }
+        
+        
+        
+       
+        
+         
+        
         $query->andFilterWhere([
             'id' => $this->id,
            // 'price' => $this->price,
-            'count_rooms' => $this->count_rooms,
-            'square' => $this->square,
+           // 'price_m' => $this->price_m,
+           'count_rooms' => $this->count_rooms,
+           // 'square' => $this->square,
             'floor' => $this->floor,
             'floors' => $this->floors,
+            //'date' => $this->date,
         ]);
-        
-        //      search price
-          if(!empty($this->price) && strpos($this->price, '-') !== false)
-         { 
-            list($start_data, $end_data) = explode('-', $this->price);
-             $query->andFilterWhere(['between', 'price', $start_data, $end_data]);
-              }
-        
         
 
         $query->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
+            ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'currency', $this->currency])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'district', $this->district])
             ->andFilterWhere(['like', 'street', $this->street])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'own_or_business', $this->own_or_business])
             ->andFilterWhere(['like', 'manager', $this->manager])
             ->andFilterWhere(['like', 'coment', $this->coment])
             ->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'site', $this->site])
+            ->andFilterWhere(['like', 'date', $this->date])
             ->andFilterWhere(['like', 'img', $this->img]);
             
-             $query->orderBy([ 'id' => SORT_DESC,]);
+           // $query->limit(5000);
+           // 
+//            Yii::$app->getDb()->cache(function ($db) use ($dataProvider) { $dataProvider->prepare(); }, 10); return $this->render('index',['dataProvider'=>$dataProvider]);
+//            
+//            
 
         return $dataProvider;
     }

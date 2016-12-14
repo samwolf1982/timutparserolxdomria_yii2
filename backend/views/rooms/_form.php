@@ -14,9 +14,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shortdistrict')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'price')->textInput() ?>
 
     <?= $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'price_m')->textInput() ?>
 
     <?= $form->field($model, 'count_rooms')->textInput() ?>
 
@@ -33,6 +37,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'street')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'state')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'own_or_business')->textInput(['maxlength' => true]) ?>
 

@@ -19,11 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shortdistrict') ?>
 
+    <?= $form->field($model, 'phone') ?>
+
     <?= $form->field($model, 'price') ?>
 
     <?= $form->field($model, 'currency') ?>
 
-    <?= $form->field($model, 'count_rooms') ?>
+    <?php // echo $form->field($model, 'price_m') ?>
+
+    <?php // echo $form->field($model, 'count_rooms') ?>
 
     <?php // echo $form->field($model, 'square') ?>
 
@@ -38,6 +42,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'street') ?>
 
     <?php // echo $form->field($model, 'description') ?>
+
+    <?php // echo $form->field($model, 'state') ?>
 
     <?php // echo $form->field($model, 'own_or_business') ?>
 

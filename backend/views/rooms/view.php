@@ -30,8 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'shortdistrict',
+            'phone',
             'price',
             'currency',
+            'price_m',
             'count_rooms',
             'square',
             'floor',
@@ -40,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'district',
             'street',
             'description:ntext',
+            'state',
             'own_or_business',
             'manager',
             'coment',
