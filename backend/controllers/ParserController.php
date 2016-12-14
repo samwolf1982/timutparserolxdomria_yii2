@@ -51,8 +51,8 @@ class ParserController extends \yii\web\Controller
             if (is_array($all_urls) && (count($all_urls) > 0)) {
 
                 \phpQuery::ajaxAllowHost('www.olx.ua');
-                $path_site = array_shift($all_urls);
-                $path_site = array_shift($datapage);
+                $path_site = array_pop($all_urls);
+                $path_site = array_pop($datapage);
                 Yii::$app->session->set('all_urls', $all_urls);
                 Yii::$app->session->set('datapage', $datapage);
                 
@@ -161,6 +161,10 @@ class ParserController extends \yii\web\Controller
                     
                     
                     
+                      $type_room = isset($details2['Тип квартиры']) ? $details2['Тип квартиры'] :
+                        'Не определено';
+                    
+                    
                     
                     
                     
@@ -173,8 +177,9 @@ class ParserController extends \yii\web\Controller
 
                 // еще одна проверка в бд на урл
 
-                $count = Rooms::find()->where(['url' => $path_site['url']])->count(); if ($count ==
-                    0) {
+                $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
+                
+                if ($count == 0) {
                     $contact = new Rooms();
                      $contact->price = $path_site['price'];
                       $contact-> own_or_business = $ownbis;
@@ -190,9 +195,11 @@ class ParserController extends \yii\web\Controller
                           $contact->img = $imgarr;
                           $contact->currency='грн';
                           
+                          $contact->date=date("Y-m-d H:i:s"); 
+                          
                           $contact->floor=$floor;
                           $contact->floors=$floors;
-                          $contact->type='-----';
+                          $contact->type=$type_room;
                           
                           
                               $contact->phone='-----';
@@ -218,6 +225,8 @@ class ParserController extends \yii\web\Controller
                         
                          $welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
                         Yii::$app->session->set('welldone', $welldone); }
+                        
+                        
                 $welldone = Yii::$app->session->get('welldone', 0); $res = array(
 
                     'debugval' => print_r($address, true),
@@ -283,12 +292,26 @@ public function actionColecturls()
                 $document = \phpQuery::newDocument($do);
                 // table main  сбор урлов и запись в сесию
                 $bread1 = '#offers_table tr td[valign^="top"] h3 a[href^=https://www.olx.ua/obyavlenie]';
-                $bread1a = $document->find($bread1); $tmp_urls = []; $all_tmp_urls = [];
+                $bread1a = $document->find($bread1); $tmp_urls = [];
+                 $all_tmp_urls = [];
                 // все 30 урлов для сверки по индексу с ценой
                 foreach ($bread1a as $key => $value) {
 
 
                 $t = pq($value)->attr('href'); 
+                
+                $uap=parse_url($t);
+                
+                
+                $t=$uap['scheme'].'://'.$uap['host'].$uap['path'];
+                //.$uap['query'];
+                
+                
+                
+                
+                //echo $t;
+                //die();
+                
                 $all_tmp_urls[] = $t;
                     // запросы в базу даных на поиск урла
                     $count = Rooms::find()->where(['url' => $t])->count(); 
@@ -299,10 +322,16 @@ public function actionColecturls()
                  }
 
             $urls_page = $tmp_urls; ///////////////////    price
-                $bread1 = '#offers_table .price'; $bread1a = $document->find($bread1);
+                $bread1 = '#offers_table .price';
+                 $bread1a = $document->find($bread1);
+                
                  foreach ($bread1a as $key => $value) {
-                $temp = pq($value)->text(); $temp = trim($temp); $temp = preg_replace('/[^0-9]+/',
-                    '', $temp); $price_page[] = $temp; }
+                $temp = pq($value)->text(); 
+                $temp = trim($temp);
+                 $temp = preg_replace('/[^0-9]+/','', $temp);
+             $price_page[] = $temp;
+                    
+                     }
 $datapg=array();
              for ($j = 0; $j < count($all_tmp_urls); $j++) {
                 $u = $all_tmp_urls[$j]; $count = Rooms::find()->where(['url' => $u])->count();

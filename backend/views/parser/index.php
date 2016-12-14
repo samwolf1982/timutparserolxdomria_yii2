@@ -53,6 +53,23 @@ use yii\helpers\Url;
         <td>Добавлено в базу</td>
          <td id="welldone">0</td>     
       </tr>
+      
+      
+       <tr>
+        <td>Количество страниц для парсинга</td>
+           <td> <input style="max-width: 80px;  text-align: center;" value="5" type="number" class="form-control" id="count_pages"/></td> 
+             
+      </tr>
+      
+      
+       <tr>
+        <td>Интервалы запросов (сек.)</td>
+           <td> <input style="max-width: 80px;  text-align: center;" value="3" type="number" class="form-control" id="time_limit"/></td> 
+             
+      </tr>
+      
+      
+      
 
 
     </tbody>
@@ -83,12 +100,16 @@ $this->registerJs("$('#btnparse').click(timer_parse_urls_start);", \yii\web\View
 
 var timerId;
 var timerIdParse;
-var page_limit=3;
+
+
+var page_limit=$('#count_pages').val();
 
 function timer_parse_urls_start(e){
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
           e.preventDefault();
           stop();
+          
+          interval_tick=   $('#time_limit').val()*1000;
                $('#status').text('Обработка');
 timerIdParse = setInterval(function() {
      e.preventDefault();
@@ -106,11 +127,15 @@ timerIdParse = setInterval(function() {
     console.log('msg: STOOP ! '+data['stop_timer']);
   }
     });
-}, 3000);
+}, interval_tick);
 }
 
 function timer_colect_urls_start(e){
-          page_limit=5;
+    
+    
+         // $('#status').text('Обработка');
+      page_limit=$('#count_pages').val(); 
+          interval_tick=   $('#time_limit').val()*1000;
        
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
           e.preventDefault();
@@ -118,6 +143,8 @@ function timer_colect_urls_start(e){
           stop();
           $('#status').text('Обработка');
 timerId = setInterval(function() {
+    
+    $('#status').text('Обработка');
       e.preventDefault();
        $link = $(e.target);
        if( (page_limit--)<=0 ){stop(); console.log('stop page limit') }
@@ -134,7 +161,7 @@ timerId = setInterval(function() {
     console.log('msg: '+data['stop_timer']);
   }
     });
-}, 3000);
+}, interval_tick);
 }
 function timer_colect_urls_stop(e){
       e.preventDefault();

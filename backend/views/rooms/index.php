@@ -47,6 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Rooms', ['create'], ['class' => 'btn btn-success']) ?>
+    
+     <?= Html::a('Сбросить кеш', ['flush'], ['class' => 'btn btn-success pull-right']) ?>
+    
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -342,20 +345,36 @@ $this->params['breadcrumbs'][] = $this->title;
               [
             'attribute'=>'description', 
             'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
+            'noWrap' => true,
             
             'contentOptions' => 
-            ['style'=>'max-width: 350px;     max-height: 120px;  width: 200px;
-    height: 100px; overflow: hidden;  white-space: pre-wrap; /* css-3 */
+            ['style'=>'max-width: 300px;     max-height: 120px;  width: 200px;
+    height: 100px;
+    
+      overflow: -moz-hidden-unscrollable;
+     overflow: scroll;
  white-space: -moz-pre-wrap; 
  white-space: -pre-wrap; 
  white-space: -o-pre-wrap; 
- word-wrap: break-word; ']
+ word-wrap: break-word;
+ 
+     text-overflow: inherit;
+ 
+ white-space: pre;
+ overflow: -moz-hidden-unscrollable;
+  '
+ ]
             ,
            
            
             ],
+            
+            
+            
             'state'
+            
+            
+            
             ,
                       [
             'attribute'=>'own_or_business', 

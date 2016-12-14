@@ -188,6 +188,18 @@ $floors = $db->cache(function ($db) {
 
         return $this->redirect(['index']);
     }
+    
+    
+    
+    
+        public function actionFlush()
+    {
+       // $this->findModel($id)->delete();
+       Yii::$app->cache->flush();
+
+        return $this->redirect(['index']);
+    }
+    
 
     /**
      * Finds the Rooms model based on its primary key value.

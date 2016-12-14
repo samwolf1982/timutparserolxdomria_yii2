@@ -72,7 +72,7 @@ class Rooms extends \yii\db\ActiveRecord
             'district' => 'Район',
             'street' => 'Улица',
             'description' => 'Описание',
-            'state' => 'Регион',
+            'state' => 'Состояние',
             'own_or_business' => 'Форма',
             'manager' => 'Менеджер',
             'coment' => 'Коментарий',
