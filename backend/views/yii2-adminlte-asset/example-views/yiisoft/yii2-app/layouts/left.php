@@ -63,6 +63,38 @@
                             ],
                         ],
                     ],
+
+
+
+ [
+                        'label' => 'Статистика',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'OLX', 'icon' => 'fa fa-file-code-o', 'url' => ['/olxstatistic'],],
+                            ['label' => 'DomRia', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
+                            [
+                                'label' => 'Level One',
+                                'icon' => 'fa fa-circle-o',
+                                'url' => '#',
+                                'items' => [
+                                    ['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],
+                                    [
+                                        'label' => 'Level Two',
+                                        'icon' => 'fa fa-circle-o',
+                                        'url' => '#',
+                                        'items' => [
+                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
+                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+
+
+
                 ],
             ]
         ) ?>

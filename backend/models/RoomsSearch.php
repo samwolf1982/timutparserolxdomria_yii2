@@ -134,7 +134,9 @@ class RoomsSearch extends Rooms
             ->andFilterWhere(['like', 'date', $this->date])
             ->andFilterWhere(['like', 'img', $this->img]);
             
-           // $query->limit(5000);
+            $query->orderBy('id DESC');
+           
+           
            // 
 //            Yii::$app->getDb()->cache(function ($db) use ($dataProvider) { $dataProvider->prepare(); }, 10); return $this->render('index',['dataProvider'=>$dataProvider]);
 //            

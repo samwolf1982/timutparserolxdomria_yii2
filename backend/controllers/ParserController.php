@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 use common\models\Rooms;
+use common\models\Olxstatistic;
 use yii\db\Migration;
 use yii\web\Response;
 
@@ -46,15 +47,40 @@ class ParserController extends \yii\web\Controller
 
 
             // дозапись в сесию( пока что такой вариант)
-            $all_urls = Yii::$app->session->get('all_urls', 0);
+           // $all_urls = Yii::$app->session->get('all_urls', 0);
             $datapage = Yii::$app->session->get('datapage', []);
-            if (is_array($all_urls) && (count($all_urls) > 0)) {
+             $path_site = array_pop($datapage);
+            
+            if(is_null($path_site)){ 
+             echo json_encode(['stop_timer' => true,'debug'=>'else','info'=>'datapage null or empty', 'colected' => count(Yii::$app->session->
+                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+            die();                  }
+             
+             
+             Yii::$app->session->set('datapage', $datapage);
+             
+             // перенос проверки на присутсвие сюда, на страничку нету смысла идти
+                    $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
+                
+                if ($count > 0)    {
+                    echo json_encode(['stop_timer' => false, 'info'=>'is present', 'colected' => count(Yii::$app->session->
+                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die();
+                }
+                           
+             
+             
+             
+                  
+                  
+            if (is_array($datapage) && (count($datapage) > 0)) {
 
                 \phpQuery::ajaxAllowHost('www.olx.ua');
-                $path_site = array_pop($all_urls);
-                $path_site = array_pop($datapage);
-                Yii::$app->session->set('all_urls', $all_urls);
-                Yii::$app->session->set('datapage', $datapage);
+                //$path_site = array_pop($all_urls);
+               
+                //Yii::$app->session->set('all_urls', $all_urls);
+           
                 
                 //debig
              //   {echo json_encode(['stop_timer' => false, 'info'=>$path_site, 'colected' => count(Yii::$app->session->
@@ -62,9 +88,11 @@ class ParserController extends \yii\web\Controller
 //                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die(); }
                 
                 // проверка на пустоту
-                if(empty($path_site['url']) || $path_site['url']=='' || is_null($path_site['url'])  ){echo json_encode(['stop_timer' => true, 'info'=>'empty urls', 'colected' => count(Yii::$app->session->
-                get('all_urls', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);  }
+     if(empty($path_site['url']) || $path_site['url']=='' || is_null($path_site['url'])  )
+     
+     {echo json_encode(['stop_timer' => true, 'info'=>'empty urls', 'colected' => count(Yii::$app->session->
+                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);  die(); }
                 \phpQuery::get($path_site['url'], function ($do)use ($path_site)
                 {
 
@@ -177,9 +205,9 @@ class ParserController extends \yii\web\Controller
 
                 // еще одна проверка в бд на урл
 
-                $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
+              //  $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
                 
-                if ($count == 0) {
+              //  if ($count == 0) {
                     $contact = new Rooms();
                      $contact->price = $path_site['price'];
                       $contact-> own_or_business = $ownbis;
@@ -224,7 +252,12 @@ class ParserController extends \yii\web\Controller
                         $contact->save();
                         
                          $welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
-                        Yii::$app->session->set('welldone', $welldone); }
+                        Yii::$app->session->set('welldone', $welldone);
+                        
+                        
+                        
+                        
+                        // }
                         
                         
                 $welldone = Yii::$app->session->get('welldone', 0); $res = array(
@@ -241,8 +274,8 @@ class ParserController extends \yii\web\Controller
 
 
         } else { // end
-            echo json_encode(['stop_timer' => true, 'colected' => count(Yii::$app->session->
-                get('all_urls', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+            echo json_encode(['stop_timer' => true,'debug'=>'else', 'colected' => count(Yii::$app->session->
+                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
                 JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
             die();
         }
@@ -265,22 +298,35 @@ public function actionColecturls()
         $votes = Yii::$app->session->get('count_page');
         //$votes=3;
 
-        if ($npage > $votes) {
-            echo json_encode(['stop_timer' => true, 'debug'=>[$votes,$npage],'colected' => count(Yii::$app->session->
-                get('all_urls', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-            die();
-        }
+      //  if ($npage > $votes) {
+//            echo json_encode(['stop_timer' => true, 'debug'=>[$votes,$npage],'colected' => count(Yii::$app->session->
+//                get('all_urls', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+//            die();
+//        }
 
-        if ($npage == 1 || $npage == 0) {
-            $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
-        } else {
-            $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page=' . $npage;
-        }
 
-        $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page=' . $npage;
-        ++$npage;
-        Yii::$app->session->set('count_url_page_index', $npage);
+
+        //if ($npage == 1 || $npage == 0) {
+//            $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
+//        } else {
+//            $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page=' . $npage;
+//        }
+//
+//        $url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page=' . $npage;
+//        ++$npage;
+        
+        
+        
+              $url=    $request->post('url');
+      //   echo json_encode(['stop_timer' => false, 'debug'=>[$request->post('url'),],'colected' => count(Yii::$app->session->
+//                get('all_urls', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+//            die();
+            
+            /////////////////////////
+        
+       // Yii::$app->session->set('count_url_page_index', $npage);
         // echo json_encode( ['stop_timer' => true,'url'=>$url],JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
         \phpQuery::ajaxAllowHost('www.olx.ua');
@@ -292,75 +338,97 @@ public function actionColecturls()
                 $document = \phpQuery::newDocument($do);
                 // table main  сбор урлов и запись в сесию
                 $bread1 = '#offers_table tr td[valign^="top"] h3 a[href^=https://www.olx.ua/obyavlenie]';
-                $bread1a = $document->find($bread1); $tmp_urls = [];
+                $bread1a = $document->find($bread1);
+                 $tmp_urls = [];
                  $all_tmp_urls = [];
                 // все 30 урлов для сверки по индексу с ценой
                 foreach ($bread1a as $key => $value) {
 
 
                 $t = pq($value)->attr('href'); 
-                
-                $uap=parse_url($t);
-                
-                
+                $t_full=$t;
+                $uap=parse_url($t);             
                 $t=$uap['scheme'].'://'.$uap['host'].$uap['path'];
-                //.$uap['query'];
+                   $all_tmp_urls[] = $t;  
+                // запись в бд для статистики
                 
+                $count = Olxstatistic::find()->where(['fullurl' => $t_full])->count(); 
                 
-                
-                
-                //echo $t;
-                //die();
-                
-                $all_tmp_urls[] = $t;
-                    // запросы в базу даных на поиск урла
-                    $count = Rooms::find()->where(['url' => $t])->count(); 
-                    $debugdata[]=$count;
-                    if ($count > 0) {
-                    $gate = true; Yii::$app->session->set('count_url_page_index',1); continue; }
-                $tmp_urls[] = $t;
+                if ($count == 0) {
+                    $contact = new Olxstatistic();
+                    
+                     $contact->fullurl = $t_full;
+                      $contact-> shorturl = $t;
+                         $contact->save();
+                    
+                     }
+                     // конец запись в бд для статистики
+                      
+           
+                              
                  }
+
 
             $urls_page = $tmp_urls; ///////////////////    price
                 $bread1 = '#offers_table .price';
                  $bread1a = $document->find($bread1);
-                
+                 
+                    $all_price=array();     
+                    
                  foreach ($bread1a as $key => $value) {
                 $temp = pq($value)->text(); 
                 $temp = trim($temp);
                  $temp = preg_replace('/[^0-9]+/','', $temp);
-             $price_page[] = $temp;
+                 
+                 $all_price[]=$temp;
+            // $price_page[] = $temp;
                     
                      }
-$datapg=array();
+                    $datapg=array();
              for ($j = 0; $j < count($all_tmp_urls); $j++) {
-                $u = $all_tmp_urls[$j]; $count = Rooms::find()->where(['url' => $u])->count();
+                $u = $all_tmp_urls[$j];
+                $count = Rooms::find()->where(['url' => $u])->count();
                     if ($count > 0)continue;
-                     $tmp = ['price' => $price_page[$j], 'url' => $all_tmp_urls[$j], ];
+                    
+                     $tmp = ['price' => $all_price[$j], 'url' => $all_tmp_urls[$j], ];
                     $datapg[] = $tmp; }
 
             ///////////////////////////////////////////
 
 
             // дозапись в сесию( пока что такой вариант)
-            $all_urls = Yii::$app->session->get('all_urls', 0); $datapage = Yii::$app->
-                session->get('datapage', []); if (is_array($all_urls)) {
-                $all_urls = array_merge($all_urls, $urls_page); $datapage = array_merge($datapage,
-                    $datapg); }
-        else {
-            $all_urls = $urls_page; $datapage = $datapg; }
-        Yii::$app->session->set('all_urls', $all_urls); Yii::$app->session->set('datapage',
-            $datapage); $all_urls = Yii::$app->session->get('all_urls'); $npage = Yii::$app->
-            session->get('count_url_page_index'); $res = array(
+            $all_urls = Yii::$app->session->get('all_urls', 0); 
+            $datapage = Yii::$app-> session->get('datapage', 0); 
+            
+            
+     // $datapage = array_merge($datapage, $datapg);
+            
+            
+            if (is_array($datapage)) {
+              // $all_urls = array_merge($all_urls, $urls_page);
+                $datapage = array_merge($datapage,
+                   $datapg); }
+       else {
+            $datapage = $datapg; }
+            
+            
+       // Yii::$app->session->set('all_urls', $all_urls);
+         Yii::$app->session->set('datapage', $datapage);
+         $all_urls = Yii::$app->session->get('datapage'); 
+         $npage = Yii::$app->session->get('count_url_page_index');
+         
+          $res = array(
 
 
             'success' => true,
-            'debug' => print_r($debugdata, true),
+            'debug' => ['url'=>$path_site,'find_urls'=>$all_tmp_urls],
             'npage' => $npage,
             'stop_timer' => $gate,
             'colected' => count($all_urls),
             'countobj' => count($all_urls),
-            ); echo json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+            );
+            
+             echo json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
             JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); //die();
         }
     );

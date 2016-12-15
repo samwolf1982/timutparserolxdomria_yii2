@@ -57,7 +57,11 @@ use yii\helpers\Url;
       
        <tr>
         <td>Количество страниц для парсинга</td>
-           <td> <input style="max-width: 80px;  text-align: center;" value="5" type="number" class="form-control" id="count_pages"/></td> 
+           <td> 
+           <label for="from_count_pages" class="pull-left"  > От </label>  <input max="999" min="0" style="max-width: 80px;  text-align: center; " class="pull-left" value="0" type="number" class="form-control" id="from_count_pages"/>
+          <input style="max-width: 80px;  text-align: center; " class="pull-right" value="5" max="1000" min="1" type="number" class="form-control" id="count_pages"/>       <label for="count_pages" class="pull-right"  > До </label>
+            
+           </td> 
              
       </tr>
       
@@ -100,7 +104,8 @@ $this->registerJs("$('#btnparse').click(timer_parse_urls_start);", \yii\web\View
 
 var timerId;
 var timerIdParse;
-
+var timer_url_colect_tik;  // add to page
+   var  interval_tick =   $('#time_limit').val()*1000;
 
 var page_limit=$('#count_pages').val();
 
@@ -134,31 +139,44 @@ function timer_colect_urls_start(e){
     
     
          // $('#status').text('Обработка');
-      page_limit=$('#count_pages').val(); 
+      page_limit= parseInt($('#count_pages').val(), 10); ; 
+          timer_url_colect_tik =  parseInt($('#from_count_pages').val(), 10); 
+          
+          stop(); 
           interval_tick=   $('#time_limit').val()*1000;
        
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
           e.preventDefault();
           
-          stop();
+         
           $('#status').text('Обработка');
-timerId = setInterval(function() {
+           timerId = setInterval(function() {
+             $('#status').text('Обработка');
+                // console.log('from'+timer_url_colect_tik+' ---  to'+page_limit);
+           if(timer_url_colect_tik >= page_limit) {stop();  $('#status').text('Закончено'); }
+              
+             if(timer_url_colect_tik++ ==0){
+                url= 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
+             }else{
+                 url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page='+ timer_url_colect_tik;
+             }      
+        
     
-    $('#status').text('Обработка');
+   
       e.preventDefault();
        $link = $(e.target);
-       if( (page_limit--)<=0 ){stop(); console.log('stop page limit') }
+  
         callUrl=$link.attr('href');
          ajaxRequest = $.ajax({
         type: "post",
         dataType: 'json',
         url: callUrl,
-        data:  { npage: 0, time: "2pm" } 
+        data:  { npage: 0, time: "2pm", url: url, } 
         ,
      success: function(data){
         if(data['colected']){$('#colected').text(data['colected']);}
         if(data['stop_timer']){  stop(); }
-    console.log('msg: '+data['stop_timer']);
+    console.log('msg suc: '+data['stop_timer']);
   }
     });
 }, interval_tick);

@@ -7,7 +7,7 @@ class m161214_024523_add_data_fields extends Migration
     public function up()
     {
              
-                     $this->dropTable('rooms');
+             $this->dropTable('rooms');
              $this->createTable('rooms', [
             'id' => $this->primaryKey(),
             'shortdistrict'=>'string',

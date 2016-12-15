@@ -201,7 +201,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterWidgetOptions'=>[
                 'pluginOptions'=>['allowClear'=>true],
             ],
-            'filterInputOptions'=>['placeholder'=>'Районы']
+            'filterInputOptions'=>['placeholder'=>'Город']
         ],
             
             
