@@ -50,6 +50,8 @@ class ParserController extends \yii\web\Controller
            // $all_urls = Yii::$app->session->get('all_urls', 0);
             $datapage = Yii::$app->session->get('datapage', []);
              $path_site = array_pop($datapage);
+             
+              Yii::$app->session->set('datapage', $datapage);
             
             if(is_null($path_site)){ 
              echo json_encode(['stop_timer' => true,'debug'=>'else','info'=>'datapage null or empty', 'colected' => count(Yii::$app->session->
@@ -58,13 +60,13 @@ class ParserController extends \yii\web\Controller
             die();                  }
              
              
-             Yii::$app->session->set('datapage', $datapage);
+            
              
              // перенос проверки на присутсвие сюда, на страничку нету смысла идти
                     $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
                 
                 if ($count > 0)    {
-                    echo json_encode(['stop_timer' => false, 'info'=>'is present', 'colected' => count(Yii::$app->session->
+                    echo json_encode(['stop_timer' => false, 'info'=>'is present', 'present_url'=>$path_site['url'], 'colected' => count(Yii::$app->session->
                 get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
                 JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die();
                 }
@@ -74,7 +76,7 @@ class ParserController extends \yii\web\Controller
              
                   
                   
-            if (is_array($datapage) && (count($datapage) > 0)) {
+           // if (is_array($datapage) && (count($datapage) > 0)) {
 
                 \phpQuery::ajaxAllowHost('www.olx.ua');
                 //$path_site = array_pop($all_urls);
@@ -273,12 +275,12 @@ class ParserController extends \yii\web\Controller
             ); // end pars inner
 
 
-        } else { // end
-            echo json_encode(['stop_timer' => true,'debug'=>'else', 'colected' => count(Yii::$app->session->
-                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-            die();
-        }
+  //      } else { // end
+//            echo json_encode(['stop_timer' => true,'debug'=>'else', 'colected' => count(Yii::$app->session->
+//                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+//            die();
+//        }
 
 
     }
@@ -421,7 +423,7 @@ public function actionColecturls()
 
 
             'success' => true,
-            'debug' => ['url'=>$path_site,'find_urls'=>$all_tmp_urls],
+            'debug' => ['url'=>$path_site,'find_urls'=>$all_tmp_urls,'catch_url'=>$all_urls],
             'npage' => $npage,
             'stop_timer' => $gate,
             'colected' => count($all_urls),
