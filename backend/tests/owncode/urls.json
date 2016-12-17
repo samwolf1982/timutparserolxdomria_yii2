@@ -1,0 +1,369 @@
+ //single 
+ https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=50&from_realty_id=&to_realty_id=&sort=0&category=1&realty_type=0&operation_type=1&state_id=12&city_id%5B0%5D=332&characteristic%5B209%5D%5Bfrom%5D=&characteristic%5B209%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B216%5D%5Bfrom%5D=&characteristic%5B216%5D%5Bto%5D=&characteristic%5B218%5D%5Bfrom%5D=&characteristic%5B218%5D%5Bto%5D=&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0
+ 
+ 
+
+// many
+https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=50&from_realty_id=&to_realty_id=&sort=0&category=1&realty_type=0&operation_type=1&state_id=12&city_id%5B1%5D=333&characteristic%5B209%5D%5Bfrom%5D=&characteristic%5B209%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B216%5D%5Bfrom%5D=&characteristic%5B216%5D%5Bto%5D=&characteristic%5B218%5D%5Bfrom%5D=&characteristic%5B218%5D%5Bto%5D=&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0
+
+{
+   "items":[
+      {
+         "lf_links_uk":[
+            {
+               "label":"купити квартиру",
+               "url":"/uk/Каталог/Продаж/Квартири/Квартира/"
+            },
+            {
+               "label":"продаж квартир від власників Ананьїв",
+               "url":"/uk/Каталог/Продаж/Квартири/Квартира/Область/Одеська/Місто/Ананьїв/"
+            },
+            {
+               "label":"куплю 3 кімнатну квартиру Ананьїв",
+               "url":"/uk/Каталог/Продаж/Квартири/Квартира/3-кімнатні/Область/Одеська/Місто/Ананьїв/"
+            },
+            {
+               "label":"куплю квартиру Ананьїв",
+               "url":"/uk/Каталог/Продаж/Квартири/Квартира/Область/Одеська/Місто/Ананьїв/Район/Ананьїв/"
+            },
+            {
+               "label":"ЖК Шістнадцята перлина в Одесі",
+               "url":"/uk/%D0%9D%D0%BE%D0%B2%D0%BE%D0%B1%D1%83%D0%B4%D0%BE%D0%B2%D0%B0/%D0%96%D0%9A-%D0%A8%D1%96%D1%81%D1%82%D0%BD%D0%B0%D0%B4%D1%86%D1%8F%D1%82%D0%B0-%D0%BF%D0%B5%D1%80%D0%BB%D0%B8%D0%BD%D0%B0-3979/"
+            }
+         ],
+         "realty_type_parent_name_uk":"Квартири",
+         "street_name":"Пушкина",
+         "rooms_count":3,
+         "advert_title":1,
+         "type":"realty",
+         "wall_type_uk":"панель",
+         "is_commercial":0,
+         "state_name":"Одесская",
+         "street_id":"",
+         "state_id":12,
+         "moderated":1,
+         "beautiful_url":"realty-prodaja-kvartira-ananev-ananev-pushkina-11708994.html",
+         "district_type_name":"Район",
+         "description":"Продам 3-х комнатную квартиру, со всеми удобствами после капитального ремонта. Квартира утеплена по всему периметру, очень теплая и экономная по газу. Заменены полностью все стояки водяные и канализационные,заменена вся проводка, выключатели и розетки все турецкой фирмы (ELBI), балкон и лоджия застеклены и утеплены, продается со всей мебелью, все остальное видно на фото или по телефону.Если надо больше фотографий, скину на почту. Во дворе имеется гараж 5х10, в гараже есть зарегистрированные вода и свет, имеется полный пакет документов.",
+         "advert_publish_type":1,
+         "currency_type":"$",
+         "district_type_id":1,
+         "longitude":"29.955712258816",
+         "ps_delete_views":0,
+         "ps_auto_republish_count":3,
+         "partner_id":1,
+         "is_exchange":"нет",
+         "moderator_id":4120582,
+         "district_id":8529,
+         "wall_type":"панель",
+         "district_name_uk":"Ананьїв",
+         "ps_delete_messages":0,
+         "publishing_date":"2016-11-21 03:51:55",
+         "description_uk":"Продам 3-х кімнатну квартиру з усіма зручностями після капітального ремонту. Квартира утеплена по всьому периметру, дуже тепла і економна по газу. Замінені повністю всі стояки водяні і каналізаційні,замінена вся електропроводка, вимикачі і розетки все турецької фірми (ELBI), балкон та лоджія засклені та утеплені, продається з меблями, все інше видно на фото або по телефону.Якщо треба більше фотографій, скину на пошту. ",
+         "_rev":"86-e4d8fe36610e77592c453a072f1f2891",
+         "currency_type_uk":"$",
+         "youtube_link":"",
+         "price_type":"за объект",
+         "ps_auto_republish":1,
+         "is_bargain":273,
+         "price":27000,
+         "updated_at":"2016-11-21 03:51:55",
+         "floor":2,
+         "moderation_date":"2016-09-11 08:40:23",
+         "latitude":"47.720531608608",
+         "price_total":27000,
+         "main_photo":"dom/photo/5976/597615/59761523/59761523.jpg",
+         "is_exchange_uk":"ні",
+         "price_item":468,
+         "realty_type_name":"Квартира",
+         "city_name":"Ананьев",
+         "realty_type_parent_id":1,
+         "rangeFactor":"00001479693115",
+         "living_square_meters":36,
+         "state_name_uk":"Одеська",
+         "advert_type_name_uk":"продаж",
+         "realty_type_id":2,
+         "rangeFactorNew":"000001479693115",
+         "price_type_uk":"за об'єкт",
+         "realty_type_name_uk":"Квартира",
+         "user_ip":0,
+         "city_id":332,
+         "ps_delete_comments":0,
+         "characteristics_values":{
+            "118":110,
+            "209":3,
+            "214":62,
+            "216":36,
+            "218":8,
+            "227":2,
+            "228":5,
+            "234":27000,
+            "242":239,
+            "247":252,
+            "265":257,
+            "273":273,
+            "396":395,
+            "443":442,
+            "475":474,
+            "480":479,
+            "495":494,
+            "516":515,
+            "568":567,
+            "576":575,
+            "586":585,
+            "629":628,
+            "686":685,
+            "692":691,
+            "700":699,
+            "709":708,
+            "806":805,
+            "846":845,
+            "859":858,
+            "879":878,
+            "892":891,
+            "894":1431,
+            "900":1432,
+            "907":906,
+            "940":939,
+            "941":948,
+            "949":1331,
+            "1020":1026,
+            "1032":1033,
+            "1136":1360,
+            "1141":1140,
+            "1157":1156,
+            "1166":1165,
+            "1169":1332,
+            "1178":1177,
+            "1181":1333,
+            "1190":1189,
+            "1193":1334,
+            "1202":1201,
+            "1206":1205,
+            "1215":1214,
+            "1219":1218,
+            "1228":1227,
+            "1232":1231,
+            "1259":1258,
+            "1268":1267,
+            "1272":1271,
+            "1283":1282,
+            "1290":1289,
+            "1297":1296,
+            "1307":1306,
+            "1357":1358,
+            "1403":1402,
+            "1437":1436
+         },
+         "_id":"realty-11708994",
+         "floors_count":5,
+         "map_type":1,
+         "created_at":"2016-06-18 17:10:18",
+         "user_id":5390464,
+         "city_name_uk":"Ананьїв",
+         "kitchen_square_meters":8,
+         "geo_zoom":18,
+         "fill":85,
+         "user_package_id":0,
+         "total_square_meters":62,
+         "realty_id":11708994,
+         "lf_links":[
+            {
+               "label":"куплю квартиру",
+               "url":"/ru/Каталог/Продажа/Квартиры/Квартира/"
+            },
+            {
+               "label":"продажа квартиры в Ананьеве",
+               "url":"/ru/Каталог/Продажа/Квартиры/Квартира/Область/Одесская/Город/Ананьев/"
+            },
+            {
+               "label":"куплю 3-комнатную квартиру в Ананьеве",
+               "url":"/ru/Каталог/Продажа/Квартиры/Квартира/3-комнатные/Область/Одесская/Город/Ананьев/"
+            },
+            {
+               "label":"куплю квартиру в районе Ананьева",
+               "url":"/ru/Каталог/Продажа/Квартиры/Квартира/Область/Одесская/Город/Ананьев/Район/Ананьев/"
+            },
+            {
+               "label":"ЖК Двадцать пятая жемчужина в Одессе",
+               "url":"/ru/%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0/%D0%96%D0%9A-%D0%94%D0%B2%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C-%D0%BF%D1%8F%D1%82%D0%B0%D1%8F-%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B6%D0%B8%D0%BD%D0%B0-4404/"
+            }
+         ],
+         "photos":{
+            "59761497":{
+               "id":59761497,
+               "file":"dom/photo/5976/597614/59761497/59761497.jpg"
+            },
+            "59761501":{
+               "id":59761501,
+               "file":"dom/photo/5976/597615/59761501/59761501.jpg"
+            },
+       
+         },
+         "date_end":"2016-12-21 03:51:55",
+         "district_name":"Ананьев",
+         "advert_type_id":1,
+         "advert_type_name":"продажа",
+         "realty_type_parent_name":"Квартиры",
+         "user":{
+            "name":"Игорь Анатольевичь, Елена Викторовна",
+            "image":"",
+            "good_partner_top":""
+         },
+         "agency":null,
+         "priceArr":{
+            "1":"27 000",
+            "2":"25 899",
+            "3":"733 696"
+         }
+      }
+   ],
+   "count":1,
+   "time":{
+
+   }
+}
+
+
+//       biss
+https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=10&from_realty_id=&to_realty_id=&sort=0&category=13&realty_type=0&operation_type=1&state_id=12&city_id%5B2%5D=334&characteristic%5B210%5D%5Bfrom%5D=&characteristic%5B210%5D%5Bto%5D=&characteristic%5B217%5D%5Bfrom%5D=&characteristic%5B217%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B219%5D%5Bfrom%5D=&characteristic%5B219%5D%5Bto%5D=&characteristic%5B226%5D=0&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0
+
+
+{
+   "items":[
+      {
+         "type":"realty",
+         "xml_checksum":"ddd412acf916938ad8cdfa876b2ea5ea8691db63cffc7170024772dbd147c557",
+         "state_name":"Одесская",
+         "is_commercial":1,
+         "return_on_moderation_date":"2014-11-14 15:42:56",
+         "state_id":12,
+         "beautiful_url":"realty-prodaja-gotovyiy-biznes-balta-balta-6324196.html",
+         "district_type_name":"Район",
+         "description":"Продажа бизнеса - швейное предприятие. Светлана +380(48)777-77-90",
+         "advert_publish_type":1,
+         "currency_type":"$",
+         "district_type_id":1,
+         "ps_delete_views":1,
+         "import_id":1351005002,
+         "partner_id":200,
+         "moderator_id":3910064,
+         "district_id":8571,
+         "description_uk":"Продаж бізнесу - швейне підприємство. Світлана +380(48)777-77-90  ",
+         "publishing_date":"2016-11-24 02:41:35",
+         "_rev":"462-ed1c2c7e2280f8a878a140a91cf3d156",
+         "updated_at":"2016-12-05 21:03:32",
+         "ps_auto_republish":0,
+         "price":300000,
+         "return_on_moderation":3,
+         "last_view":"2013-02-19 23:49:45",
+         "moderation_date":"2014-08-11 03:46:13",
+         "main_photo":"dom/photo/1514/151423/15142372/15142372.jpg",
+         "realty_type_name":"готовый бизнес",
+         "city_name":"Балта",
+         "rangeFactor":"00001479948095",
+         "realty_type_parent_id":13,
+         "state_name_uk":"Одеська",
+         "rangeFactorNew":"000001479948095",
+         "realty_type_id":22,
+         "deleted_by":"cron",
+         "city_id":334,
+         "agency_id":20606,
+         "ps_delete_comments":1,
+         "_id":"realty-6324196",
+         "characteristics_values":{
+            "199":181,
+            "214":1000,
+            "234":300000,
+            "242":239,
+            "1437":1434
+         },
+         "created_at":"2012-10-23 18:11:26",
+         "user_id":2382285,
+         "city_name_uk":"Балта",
+         "fill":67,
+         "user_package_id":0,
+         "total_square_meters":1000,
+         "links":"<a target='_blank' href='http://dom.ria.com/ru/Каталог/Продажа/Гаражи/Гараж/'>разборный гараж купить</a>, <a target='_blank' href='http://dom.ria.com/ru/Каталог/Аренда-Помесячно/Дома/Дом/'>сниму дом с последующим выкупом</a>, <a target='_blank' href='http://dom.ria.com/ru/Каталог/Аренда-Посуточно/Дома/Дом/Область/Харьковская/Город/Харьков/'>снять дом в харькове посуточно</a>",
+         "delete_reason":1,
+         "realty_id":6324196,
+         "date_end":"2016-12-24 02:41:35",
+         "photos":{
+            "15142372":{
+               "id":15142372,
+               "file":"dom/photo/1514/151423/15142372/15142372.jpg",
+               "is_main":true
+            },
+            "15142374":{
+               "id":15142374,
+               "file":"dom/photo/1514/151423/15142374/15142374.jpg",
+               "is_main":false
+            },
+            "15142375":{
+               "id":15142375,
+               "file":"dom/photo/1514/151423/15142375/15142375.jpg",
+               "is_main":false
+            },
+            "15142376":{
+               "id":15142376,
+               "file":"dom/photo/1514/151423/15142376/15142376.jpg",
+               "is_main":false
+            },
+            "15142377":{
+               "id":15142377,
+               "file":"dom/photo/1514/151423/15142377/15142377.jpg",
+               "is_main":false
+            },
+            "15142378":{
+               "id":15142378,
+               "file":"dom/photo/1514/151423/15142378/15142378.jpg",
+               "is_main":false
+            },
+            "15142379":{
+               "id":15142379,
+               "file":"dom/photo/1514/151423/15142379/15142379.jpg",
+               "is_main":false
+            },
+            "19680459":{
+               "id":19680459,
+               "file":"dom/photo/1968/196804/19680459/19680459.jpg",
+               "is_main":false
+            },
+            "19680460":{
+               "id":19680460,
+               "file":"dom/photo/1968/196804/19680460/19680460.jpg",
+               "is_main":false
+            }
+         },
+         "district_name":"Балта",
+         "search_field":"продажа готовый бизнес коммерческая недвижимость Одесская область Балта Балта",
+         "advert_type_id":1,
+         "realty_view_count":2,
+         "advert_type_name":"продажа",
+         "realty_type_parent_name":"коммерческая недвижимость",
+         "user":{
+            "name":"Business For Sale Атланта",
+            "image":"avatars/all/238/23822/2382285/2382285.jpg?v=1413885632",
+            "good_partner_top":""
+         },
+         "agency":{
+            "agency_id":20606,
+            "name":"Business For Sale Атланта",
+            "logo":"dom/agence/2/206/20606/20606.jpg?v=1349858561",
+            "agency_type":1,
+            "good_partner":1,
+            "user_id":2382285
+         },
+         "priceArr":{
+            "1":"300 000",
+            "2":"287 772",
+            "3":"8 152 173"
+         }
+      }
+   ],
+   "count":1,
+   "time":{
+
+   }
+}
+

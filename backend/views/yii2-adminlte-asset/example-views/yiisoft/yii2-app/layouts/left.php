@@ -43,7 +43,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'OLX', 'icon' => 'fa fa-file-code-o', 'url' => ['/parser'],],
-                            ['label' => 'DomRia', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
+                            ['label' => 'DomRia', 'icon' => 'fa fa-dashboard', 'url' => ['/parserdomria'],],
                             [
                                 'label' => 'Level One',
                                 'icon' => 'fa fa-circle-o',

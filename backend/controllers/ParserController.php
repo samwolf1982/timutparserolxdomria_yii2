@@ -63,7 +63,7 @@ class ParserController extends \yii\web\Controller
             
              
              // перенос проверки на присутсвие сюда, на страничку нету смысла идти
-                    $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
+                    $count = Rooms::find()->select(['id'])->where(['url' => $path_site['url']])->limit(1)->count(); 
                 
                 if ($count > 0)    {
                     echo json_encode(['stop_timer' => false, 'info'=>'is present', 'present_url'=>$path_site['url'], 'colected' => count(Yii::$app->session->
@@ -389,7 +389,9 @@ public function actionColecturls()
                     $datapg=array();
              for ($j = 0; $j < count($all_tmp_urls); $j++) {
                 $u = $all_tmp_urls[$j];
-                $count = Rooms::find()->where(['url' => $u])->count();
+                //$count = Rooms::find()->where(['url' => $u])->count();
+               $count =  Rooms::find()->select(['id'])->where(['url' => $u])->limit(1)->count(); 
+                
                     if ($count > 0)continue;
                     
                      $tmp = ['price' => $all_price[$j], 'url' => $all_tmp_urls[$j], ];

@@ -1,0 +1,52 @@
+
+https://dom.ria.com/node/api/getOwnerAndAgencyDataByIds?userId=5390464&agencyId=0&langId=2&_csrf=t1chwaXH-3PiLKvfGBEjVdSE8LFGHob-bIwk
+
+{
+   "owner":{
+      "email_confirmed":0,
+      "type":"user",
+      "state_name":"Винницкая",
+      "user_ip":0,
+      "_rev":"22-4f07a283b815da174655f688d165a02f",
+      "state_id":1,
+      "ps_delete_comments":1,
+      "ps_auto_republish":1,
+      "updated_at":"2016-10-20 06:02:17",
+      "_id":"user-5390464",
+      "email":"bezzybenko80@mail.ru",
+      "register_date":"2016-06-18 17:05:01",
+      "name":"Игорь Анатольевичь, Елена Викторовна",
+      "created_at":"2016-06-18 17:05:01",
+      "user_id":5390464,
+      "ps_delete_views":1,
+      "owner_phones":[
+         {
+            "phone_id":"675672496",
+            "user_id":"5390464",
+            "phone":"0973741516",
+            "region_code_size":"3",
+            "checked":"1",
+            "is_mobile":"1",
+            "prio":"0",
+            "country_code":"38",
+            "phone_code":"097",
+            "phone_number":"3741516",
+            "phone_formatted":"(097) 374-15-16",
+            "additional_data":{
+               "phone_id":"675672496",
+               "call_from":"",
+               "call_till":"",
+               "call_name":"",
+               "ask_for":""
+            }
+         }
+      ],
+      "uses_site":"6 месяцев",
+      "socialContacts":{
+
+      }
+   },
+   "agency":{
+
+   }
+}

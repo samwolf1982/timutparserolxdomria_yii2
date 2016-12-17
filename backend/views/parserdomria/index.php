@@ -6,10 +6,10 @@ use yii\widgets\DetailView;
 use yii\bootstrap\BootstrapAsset;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-//\Yii::info("own: ", var_dump($params,true));
+
 
 ?>
-<h1 class="text-center">Парсер OLX</h1>
+<h1 class="text-center">Парсер DomRia</h1>
 
 
 
@@ -36,13 +36,6 @@ use yii\helpers\Url;
         <hr />     
   <table class="table table-bordered">
     <tbody>
-     <tr>
-        <td>Стартовая страничка</td>
-         <td >
-                 <input  style="width: 100%;  text-align: center; " class="pull-left" value="https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/" type="text" class="form-control" id="start_url"/>
-         </td>     
-      </tr>
-    
        <tr>
         <td>Доступно для парсинга</td>
          <td id="urlpages"><?= $count_page; ?>&nbsp;страниц</td>     
@@ -79,15 +72,24 @@ use yii\helpers\Url;
              
       </tr>
       
+        <tr>
+        <td>Debug</td>
+           <td>     <div id="debug"> <?=$debug; ?> </div>    </td> 
+             
+      </tr>
+      
+      
       
       
 
 
     </tbody>
   </table>
-<?= Html::a("Доступные страницы", ['parser/countpage'], ['class' => 'btn btn-lg btn-primary '],['data-pjax'=>1]) ?>
 
-<?php Pjax::end(); ?>
+
+<?php Pjax::end(); ?>   
+<?= Html::a("TEST", ['parserdomria/testdata'], [ 'id'=>'btns_test','class' => 'btn btn-lg btn-primary ']) ?>
+
    <?= Html::a("Сбор урлов", ['parser/colecturls'], ['id'=>'btns', 'class' => 'btn btn-lg btn-primary ']) ?>
     <?= Html::a("Парсинг", ['parser/pars'], ['id'=>'btnparse', 'class' => 'btn btn-lg btn-success ']) ?>
     <?= Html::a("Stop", ['parser/colecturls'], ['id'=>'btnstop', 'class' => 'btn btn-lg btn-danger ']) ?>
@@ -95,6 +97,8 @@ use yii\helpers\Url;
 <div class="ddd">
 <?php
 
+
+$this->registerJs("$('#btns_test').click(btns_test_f);", \yii\web\View::POS_READY);
 
 $this->registerJs("$('#btns').click(timer_colect_urls_start);", \yii\web\View::POS_READY);
 $this->registerJs("$('#btnstop').click(timer_colect_urls_stop);", \yii\web\View::POS_READY);
@@ -115,6 +119,34 @@ var timer_url_colect_tik;  // add to page
    var  interval_tick =   $('#time_limit').val()*1000;
 
 var page_limit=$('#count_pages').val();
+
+
+
+
+function btns_test_f(e){
+     // начать повторы с интервалом 2 сек и уменьшать количиство страниц
+          e.preventDefault();
+          stop();
+          $link = $(e.target);
+      callUrl=$link.attr('href');
+          
+               $('#status').text('Test send');
+                      ajaxRequest = $.ajax({
+        type: "post",
+        dataType: 'json',
+        url: callUrl,
+        data:  { npage: 0, time: "23pm" } 
+        ,
+     success: function(data){
+        
+        $('#status').text('Test success');
+        if(data['welldone']){$('#welldone').text(data['welldone']);}
+        if(data['stop_timer']){ stop(); }
+  }
+    });
+               
+
+}
 
 function timer_parse_urls_start(e){
      // начать повторы с интервалом 2 сек и уменьшать количиство страниц
@@ -163,12 +195,9 @@ function timer_colect_urls_start(e){
            if(timer_url_colect_tik >= page_limit) {stop();  $('#status').text('Закончено'); }
               
              if(timer_url_colect_tik++ ==0){
-                
-                url=  $('#start_url').val(); 
-              //  url= 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
+                url= 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
              }else{
-                url=  $('#start_url').val()+'?page='+timer_url_colect_tik;;
-                 //url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page='+ timer_url_colect_tik;
+                 url = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/?page='+ timer_url_colect_tik;
              }      
         
     
