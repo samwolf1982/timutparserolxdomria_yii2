@@ -20,6 +20,7 @@ use Yii;
  * @property string $type
  * @property string $district
  * @property string $street
+ * @property string $street2
  * @property string $description
  * @property string $state
  * @property string $own_or_business
@@ -29,6 +30,8 @@ use Yii;
  * @property string $site
  * @property string $img
  * @property string $date
+ * @property string $material
+ * @property int $site_id
  */
 class Rooms extends \yii\db\ActiveRecord
 {
@@ -46,9 +49,9 @@ class Rooms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'price_m', 'count_rooms', 'square', 'floor', 'floors'], 'integer'],
+            [['price', 'price_m', 'count_rooms', 'square', 'floor', 'floors','site_id'], 'integer'],
             [['description', 'url', 'img','date'], 'string'],
-            [['shortdistrict', 'phone', 'currency', 'type', 'district', 'street', 'state', 'own_or_business', 'manager', 'coment', 'site'], 'string', 'max' => 255],
+            [['shortdistrict', 'phone', 'currency', 'type', 'district', 'street', 'street2', 'state', 'own_or_business', 'manager', 'coment', 'site', 'material'], 'string', 'max' => 255],
         ];
     }
 
@@ -80,6 +83,9 @@ class Rooms extends \yii\db\ActiveRecord
             'site' => 'Сайт',
             'img' => 'КартинкиJSON',
             'date' => 'Дата',
+            'material'=>'Материал',
+            'site_id'=>'><Ид сайта',
+            'street2'=>'Улица',
         ];
     }
 }

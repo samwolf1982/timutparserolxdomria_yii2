@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 use common\models\Rooms;
+use common\models\Coordinates;
 use common\models\Olxstatistic;
 use yii\db\Migration;
 use yii\web\Response;
@@ -204,6 +205,11 @@ class ParserController extends \yii\web\Controller
                     'Не определен'; if (!isset($address[2]))$address[2] = 'Не определен'; $imgarr =
                     json_encode($imgarr, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |
                     JSON_UNESCAPED_UNICODE); //     fill to db
+
+
+      // find id
+    //offer-titlebox__details
+
 
                 // еще одна проверка в бд на урл
 

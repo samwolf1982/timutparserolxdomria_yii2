@@ -121,6 +121,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             
             
+                [
+            'attribute'=>'site_id', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            'contentOptions' => 
+            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap;
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+            ],
+            
+            
+            
+            
               'date',
             
             
@@ -203,6 +219,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'filterInputOptions'=>['placeholder'=>'Город']
         ],
+        
+        
+                              [
+            'attribute'=>'material', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->material;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+   
+   'filter'=>  $material,         
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Материал']
+        ],
+        
             
             
             
@@ -210,6 +243,23 @@ $this->params['breadcrumbs'][] = $this->title;
               
                  [
             'attribute'=>'street', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+            
+            'contentOptions' => 
+            ['style'=>'min-width: 120px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+           
+        
+            ],
+            
+                     
+                 [
+            'attribute'=>'street2', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
             

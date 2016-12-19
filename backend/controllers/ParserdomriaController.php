@@ -5,6 +5,8 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 use common\models\Rooms;
+use common\models\RoomsToCoordinates;
+  use common\models\Coordinates;
 use common\models\Olxstatistic;
 use yii\db\Migration;
 use yii\web\Response;
@@ -22,7 +24,7 @@ class ParserdomriaController extends \yii\web\Controller
          $room = new Rooms();
         $total = Rooms::find()->count();
         $olx_total = Rooms::find()->where(['site' => 'OLX'])->count();
-        $domria_total = Rooms::find()->where(['site' => 'DR'])->count();
+        $domria_total = Rooms::find()->where(['site' => 'DomRia'])->count();
         $new_urls = 0;
 
 
@@ -40,16 +42,31 @@ public function actionTestdata() {
     
 $this->clear_all_data();  
 $dont_know='Не определено';
+              
+              
+ $arr_info= array();
+ 
+               
+//$cur_index_sity=Yii::$app->request->post('sity');       ;  // post category sities 0 ananiyev
+  $limit=Yii::$app->request->post('limit'); 
+//  $to=Yii::$app->request->post('to'); 
+  $page=Yii::$app->request->post('page'); 
+
+// $state_id=12;// одесская
+//$sities_category=[332,334,336,353];// uj
 
 
- $state_id=12;// одесская
-$sities_category=[332,];// uj
-$cur_index_sity=0;
+ //$sity_id_like_form= urlencode( 'city_id['.$cur_index_sity.']' ).'=353'; 
+// $sity_id_like_form= urlencode( 'city_id['.$cur_index_sity.']' ).'='.$sities_category[$cur_index_sity]; 
 
- $sity_id_like_form= urlencode( 'city_id['.$cur_index_sity.']' ).'='.$sities_category[$cur_index_sity]; 
 
-                
-        $path='https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=50&from_realty_id=&to_realty_id=&sort=0&category=1&realty_type=0&operation_type=1&state_id={$state_id}&'.urlencode( 'city_id['.$cur_index_sity.']').'='.$sities_category[$cur_index_sity].'&characteristic%5B209%5D%5Bfrom%5D=&characteristic%5B209%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B216%5D%5Bfrom%5D=&characteristic%5B216%5D%5Bto%5D=&characteristic%5B218%5D%5Bfrom%5D=&characteristic%5B218%5D%5Bto%5D=&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0';
+
+
+
+       $path="https://dom.ria.com/searchEngine/?page={$page}&new_search=1&limit={$limit}&from_realty_id=&to_realty_id=&sort=0&category=1&realty_type=0&operation_type=1&state_id=12&city_id%5B20%5D=12&characteristic%5B209%5D%5Bfrom%5D=&characteristic%5B209%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B216%5D%5Bfrom%5D=&characteristic%5B216%5D%5Bto%5D=&characteristic%5B218%5D%5Bfrom%5D=&characteristic%5B218%5D%5Bto%5D=&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0";
+
+                                                     //ok
+//        $path='https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=50&from_realty_id=&to_realty_id=&sort=0&category=1&realty_type=0&operation_type=1&state_id={$state_id}&'.urlencode( 'city_id['.$cur_index_sity.']').'='.$sities_category[$cur_index_sity].'&characteristic%5B209%5D%5Bfrom%5D=&characteristic%5B209%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B216%5D%5Bfrom%5D=&characteristic%5B216%5D%5Bto%5D=&characteristic%5B218%5D%5Bfrom%5D=&characteristic%5B218%5D%5Bto%5D=&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0';
         
 //     $path=   'https://dom.ria.com/searchEngine/?page=0&new_search=1&limit=10&from_realty_id=&to_realty_id=&sort=0&category=13&realty_type=0&operation_type=1&state_id=12&city_id%5B2%5D=334&characteristic%5B210%5D%5Bfrom%5D=&characteristic%5B210%5D%5Bto%5D=&characteristic%5B217%5D%5Bfrom%5D=&characteristic%5B217%5D%5Bto%5D=&characteristic%5B214%5D%5Bfrom%5D=&characteristic%5B214%5D%5Bto%5D=&characteristic%5B219%5D%5Bfrom%5D=&characteristic%5B219%5D%5Bto%5D=&characteristic%5B226%5D=0&characteristic%5B227%5D%5Bfrom%5D=&characteristic%5B227%5D%5Bto%5D=&characteristic%5B228%5D%5Bfrom%5D=&characteristic%5B228%5D%5Bto%5D=&characteristic%5B234%5D%5Bfrom%5D=&characteristic%5B234%5D%5Bto%5D=&characteristic%5B242%5D=239&characteristic%5B265%5D=0&realty_id_only=&date_from=&date_to=&with_phone=&exclude_my=&new_housing_only=&banks_only=&email=&period=0';
     
@@ -66,27 +83,55 @@ else{
     
     
     $obj=json_decode($responce_domria);
-    
+              $arr_info=array();
     foreach ($obj->items as $key => $value) {
-   
+        //$arr_info['catch']=array();
+    
      $url=$value->beautiful_url;
-   // 1436 собственикб   1435 представитель хозяина 1434 посредник 1473 предс застройщика
-      $ob_arr=[1436=>'Частного лица', 1435=>'Частного лица' ,1434 =>'Бизнес', 1473 =>'Бизнес',] ;
-      
-     $own_biss=$value->characteristics_values->{1437};
-     $own_biss=$ob_arr[$own_biss];
+     $url_full=$root_site.$value->beautiful_url;
      
-     $tmp_price=  $value->priceArr->{3};
+     if(!empty($url_full)){
+     $arr_info[]= $url_full ;
+     }
+   // 1436 собственикб   1435 представитель хозяина 1434 посредник 1473 предс застройщика
+      $ob_arr=[0=>$dont_know,1436=>'Частного лица', 1435=>'Частного лица' ,1434 =>'Бизнес', 1473 =>'Бизнес',] ;
+      
+     $own_biss=isset( $value->characteristics_values->{1437})?$value->characteristics_values->{1437} : 0;
+     $own_biss=isset( $ob_arr[$own_biss])?$ob_arr[$own_biss]:'Не определено';
+     
+     //$tmp_price=  $value->priceArr->{3};
+                   if(isset($value->priceArr->{3})){
+                        $tmp_price=$value->priceArr->{3}; $currency= 'грн';
+                    
+                   }elseif(isset($value->priceArr->{2})) {
+                    
+                    $tmp_price=$value->priceArr->{2}; $currency= '€';
+
+                   }elseif(isset($value->priceArr->{1})){ $tmp_price=$value->priceArr->{2}; $currency= '$'; }
+                   else{ $tmp_price='0'; $currency= 'грн';}
+     
+     
+      //$currency= 'грн';
+     
      $tmp_price = trim($tmp_price);
      $price = preg_replace('/[^0-9]+/','', $tmp_price);
      
-     $square= $value->total_square_meters;
+     $square=  isset( $value->total_square_meters) ?  $value->total_square_meters: 0 ;
      
+     $square =intval($square) ;
      $district=$value->city_name;
      
-     $street=isset( $value->street_name) ?$value->street_name:'Улица не определена' ;
      
-     $description=$value->description;
+     
+     $street=isset( $value->district_name) ?$value->district_name:'Не определена' ;
+   //  $street=isset( $value->street_name) ?$value->street_name:'Улица не определена' ;
+     
+     $street2   =isset( $value->street_name) ?$value->street_name:'Улица не определена' ;
+     
+                                // $arr['created_at']; date("Y-m-d H:i:s");
+         $created_at=isset( $value->created_at)?$value->created_at:  date("Y-m-d H:i:s");
+     
+     $description= isset( $value->description)?$value->description:$dont_know;
      
        // title
      $array_des=explode(" ",$description); 
@@ -99,24 +144,30 @@ else{
                    }
      
      
-     $img=[];
-             $img= $this->generate_img_url($value->photos,$url)  ;
+     $img=array();
+      
+                  if(isset($value->photos)){
+             $img= $this->generate_img_url($value->photos,$url)  ;  }
              
               $img =
                     json_encode($img, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |JSON_UNESCAPED_UNICODE); 
                     
-                    $currency= 'грн';
+                   
      
 
            // проверка на урл
               // перенос проверки на присутсвие сюда, на страничку нету смысла идти
-                    $count = Rooms::find()->select(['id'])->where(['url' => $url])->limit(1)->count(); 
+                    $count = Rooms::find()->select(['id'])->where(['url' => $url_full])->limit(1)->count(); 
                 
-                $count=0;
+               // $count=0;
                 if ($count > 0)    {
-                    echo json_encode(['stop_timer' => false, 'info'=>'is present', 'present_url'=>$url, 'colected' => count(Yii::$app->session->
-                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die();
+                    
+                   // echo 'present';
+                    $arr_info['present'][]=$url_full;
+                    continue;
+//                    echo json_encode(['stop_timer' => false, 'info'=>'is present', 'present_url'=>$url_full, 'colected' => count(Yii::$app->session->
+//                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die();
                 }
      
      // data in db
@@ -126,11 +177,21 @@ else{
      // если застройщик тогда Новостройки иначе  Вторичный рынок
      
                                                 //1473
-     if($value->characteristics_values->{1437}==1473){
+                                                
+      if( isset($value->characteristics_values->{1437})){
+            if($value->characteristics_values->{1437}==1473){
          $type='Новостройки'; 
      } else{
          $type='Вторичный рынок';
      }
+        
+        
+        }  else{
+         $type=$dont_know;
+     }                                             
+    
+    
+    
     
     
     
@@ -152,7 +213,7 @@ else{
       
        foreach ($telresp->owner->owner_phones as $k => $pho) {
         
-        $phone[]=$pho->phone;
+        $phone[]= isset($pho->phone)?$pho->phone:$dont_know;
         }
     
     }      
@@ -167,41 +228,53 @@ else{
                 $price_m= intval($price)/intval($square);
                 }           
      
-          $count_rooms = isset( $value->total_square_meters) ?$value->total_square_meters: 0;
+          $count_rooms = isset( $value->rooms_count) ?$value->rooms_count: 0;
      
-     
+         $latitude=    isset( $value->latitude) ?$value->latitude: 0;
+         $longitude=     isset( $value->longitude) ?$value->longitude: 0;
+         
+         $realty_id= isset($value->realty_id)?$value->realty_id: null;
      // порода дерева
+     $material=isset($value-> wall_type) ? $value->wall_type :'Не определено';
     // $state=>
-     
-     
-     
-     
-                 
-//                 $arr=['price'=>$root_site.$value->beautiful_url, 'ownbis'=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ''=>$value->, ];
-//                 
-              // $contact->date=date("Y-m-d H:i:s");  
-              $arr=   ['price'=>$price, 'own_biss'=>$own_biss,'square'=>$square,'district'=>$district,'street'=>$street,'description'=>$description,'shortdistrict'=>$shortdistrict,'manager'=>"********",'coment'=>'********','url'=>$root_site.$url,'site'=>'DomRia','img'=>$img,'currency'=> $currency,'floor'=>$floor,'floors'=>$floors,'type'=>$type,'phone'=>$phone,'price_m'=>$price_m,'count_rooms'=>$count_rooms, ];
+          
+  
+              $arr=   ['price'=>$price,
+               'own_biss'=>$own_biss,
+               'square'=>$square,
+               'district'=>$district,
+               'street'=>$street,
+               'description'=>$description,
+               'shortdistrict'=>$shortdistrict,
+               'manager'=>"********",
+               'coment'=>'********',
+               'url'=>$url_full,
+               'site'=>'DomRia'
+               ,'img'=>$img,
+               'currency'=> $currency,
+               'floor'=>$floor,
+               'floors'=>$floors,
+               'type'=>$type,
+               'phone'=>$phone,
+               'price_m'=>$price_m,
+               'count_rooms'=>$count_rooms,
+                'latitude'=>$latitude, 
+                'longitude'=>$longitude,
+                'material'=>$material,
+                'realty_id'=>$realty_id,
+                'street2'=>$street2 ,
+                'created_at'=>$created_at  ,
+                ];
               
                    $this->  write_to_db($arr) ;
-                     echo json_encode(['stop_timer' => false, 'info'=> $arr, 'present_url'=>$url, 'colected' => count(Yii::$app->session->
-                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);       
+                     $arr_info['catch'][]=$url_full;
+                  //   echo json_encode(['stop_timer' => false, 'info'=> $arr, 'present_url'=>$url_full, 'colected' => count(Yii::$app->session-> get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);       
             
                               
             
             
-            
-            
-            
-            
-                
-             
-//              echo json_encode(['stop_timer' => false, 'info'=> $arr, 'present_url'=>$url, 'colected' => count(Yii::$app->session->
-//                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-                
                
-                 die();
+                 //die();
                    
                              
            
@@ -209,16 +282,37 @@ else{
     
     
     
-        break;
+       // break;
         }
+        
+        
+        
+    // $wd=   Yii::$app->session->get('welldone_domria', 0);
+     
+     
+      $total_in_page=  isset( $arr_info['catch'] ) ? count($arr_info['catch']): 0;
+     $catch=  isset( $arr_info['catch'] ) ? $arr_info['catch'] :'nothing';
+     $present=isset ($arr_info['present'])? $arr_info['present']:'nothuinbg' ;
+     //$wd=$wd+$total_in_page;
+       //Yii::$app->session->set('welldone_domria', $wd);
+       
+                               
+           \Yii::info("own: ", $arr_info);
+                        echo json_encode([ 'colected' => $total_in_page,'stop_timer' => false, 
+                        //'catch'=> $catch, 'present'=>$present,
+                          ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);       
+                      die();
     
     
     
 }    
 
 
-  return $this->renderAjax('index', [ 'debug'=> $responce_domria,  'total' => $total=-9, 'olx_total' => $olx_total=-9,
-            'domria_total' => $domria_total=-9,  'count_page' => $count_page=-9, ]);
+
+                echo json_encode(['stop_timer' => false, 'info'=> ['empty responce'],  'some' => 0 ] , JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);  
+                die();
+
+ // return $this->renderAjax('index', [ 'debug'=> $responce_domria,  'total' => $total=-9, 'olx_total' => $olx_total=-9, 'domria_total' => $domria_total=-9,  'count_page' => $count_page=-9, ]);
 
 //\phpQuery::ajaxAllowHost('www.olx.ua');
 //$path_site = 'https://www.olx.ua/nedvizhimost/prodazha-kvartir/od/';
@@ -245,14 +339,16 @@ else{
     public function clear_all_data() {
 // обнуление всех сесий
 
-Yii::$app->session->set('count_page', 0);
-Yii::$app->session->set('votes', 0); //  количесвто доступных страниц (500)
-Yii::$app->session->set('count_url_page_index', 1); // индекс для сбора урлов 0-500 * 38
-Yii::$app->session->set('all_urls', 0); // массив урлов (новых)
-Yii::$app->session->set('colected', 0); // сколько собрано урлов для обработки статистика
-Yii::$app->session->set('welldone', 0); // сколько собрано обїєктов для обработки статистика
+Yii::$app->session->set('welldone_domria', 0);
 
-Yii::$app->session->set('datapage', 0); // все урли + цена замена для all_urls
+//Yii::$app->session->set('count_page', 0);
+//Yii::$app->session->set('votes', 0); //  количесвто доступных страниц (500)
+//Yii::$app->session->set('count_url_page_index', 1); // индекс для сбора урлов 0-500 * 38
+//Yii::$app->session->set('all_urls', 0); // массив урлов (новых)
+//Yii::$app->session->set('colected', 0); // сколько собрано урлов для обработки статистика
+//Yii::$app->session->set('welldone', 0); // сколько собрано обїєктов для обработки статистика
+//
+//Yii::$app->session->set('datapage', 0); // все урли + цена замена для all_urls
 
 }
 
@@ -323,6 +419,7 @@ public function write_to_db($arr){
                        $contact->square = $arr['square'];
                         $contact->district = $arr['district'];
                         $contact->street = $arr['street'];
+                         $contact->street2 = $arr['street2'];
                          $contact->description = $arr['description'];
                           $contact->shortdistrict = $arr['shortdistrict'];
                     $contact->manager = $arr['manager'];
@@ -333,7 +430,7 @@ public function write_to_db($arr){
 
                           $contact->currency=$arr['currency'];
 //                          
-                         $contact->date=date("Y-m-d H:i:s"); 
+                         $contact->date= $arr['created_at']; date("Y-m-d H:i:s"); 
 //                          
                         $contact->floor=$arr['floor'];
                           $contact->floors=$arr['floors'];
@@ -350,12 +447,53 @@ public function write_to_db($arr){
 //              
                         $contact->count_rooms=$arr['count_rooms'];
                         
-                        if ($contact->validate()) { $contact->save(); }
+                        $contact->material=$arr['material'];
+                        
+                        $contact->site_id =$arr['realty_id'];
+                        
+                        
+                        if ($contact->validate()) { 
+                            
+                            $contact->save();
+                            
+                            //$contact->id;
+                      
+                    $latitude  =$arr['latitude'];     
+                     $longitude =$arr['longitude'];
+                     
+                             
+                     
+                     // write coordinate
+                     if( !($latitude ==0 || $longitude== 0)){
+                        
+                        $coo=new Coordinates();
+                        $coo->latitude=$latitude;
+                        $coo->longitude=$longitude;
+                       if($coo->validate()){  $coo->save();}else{
+                        //print_r($coo->errors);
+                        }
+                        
+                          $r_t_c_fk=new RoomsToCoordinates();
+                          $r_t_c_fk-> id_coordinates=$coo->id;
+                          $r_t_c_fk->id_rooms=$contact->id;
+                          if($r_t_c_fk->validate()){$r_t_c_fk->save();}else{
+                       // print_r($r_t_c_fk->errors);
+                       }
+                        
+                        
+                     }       
+                     
+                            
+                            
+                            
+                            
+                            
+                             }
 else { 
                      
  }
                         
-        print_r($contact->errors);     
+       // print_r($contact->errors);     
 }
 
 }

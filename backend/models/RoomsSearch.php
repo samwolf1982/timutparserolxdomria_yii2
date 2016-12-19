@@ -22,7 +22,7 @@ class RoomsSearch extends Rooms
     {
         return [
             [['id', 'count_rooms', 'floor', 'floors'], 'integer'],
-            [['shortdistrict', 'price' , 'square' , 'price_m', 'phone', 'currency', 'type', 'district', 'street', 'description', 'state', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img','date'], 'safe'],
+            [['shortdistrict', 'price' , 'square' , 'price_m', 'phone', 'currency', 'type', 'district', 'street','street2', 'description', 'state', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img','date','material','site_id'], 'safe'],
         ];
     }
 
@@ -99,6 +99,19 @@ class RoomsSearch extends Rooms
                       }else{
                            $query->andFilterWhere([ 'square' => $this->square,]);
                       }
+                      
+                      
+                      // <> site id
+                      
+                      if(preg_match('/(<=|>=|<|>)/', $this->site_id, $operator) ){
+                          preg_match('/\d+/', $this->site_id, $views);
+                          
+                           $operator = isset($operator[0]) ? $operator[0] : '=';
+                           $views = isset($views[0]) ? $views[0] : '0';
+                            $query->andFilterWhere([$operator,'site_id', $views]);
+                      }
+           
+           
         
         
         
@@ -114,6 +127,7 @@ class RoomsSearch extends Rooms
            // 'square' => $this->square,
             'floor' => $this->floor,
             'floors' => $this->floors,
+            //'site_id'=>$this->site_id,
             //'date' => $this->date,
         ]);
         
@@ -124,6 +138,7 @@ class RoomsSearch extends Rooms
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'district', $this->district])
             ->andFilterWhere(['like', 'street', $this->street])
+            ->andFilterWhere(['like', 'street2', $this->street2])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'own_or_business', $this->own_or_business])
@@ -132,7 +147,14 @@ class RoomsSearch extends Rooms
             ->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'site', $this->site])
             ->andFilterWhere(['like', 'date', $this->date])
+        
+               
+           ->andFilterWhere(['like', 'material', $this->material])
+            
             ->andFilterWhere(['like', 'img', $this->img]);
+            
+            $query->orderBy('site_id DESC');
+            //$query->orderBy('id DESC');
             
             $query->orderBy('id DESC');
            

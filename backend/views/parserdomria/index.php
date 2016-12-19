@@ -33,33 +33,46 @@ use yii\helpers\Url;
    
    
      <?php Pjax::begin(['id' => 'admin-crud-id2', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST','async'=>false,]]) ?>
-        <hr />     
+        <hr />  
+           
   <table class="table table-bordered">
     <tbody>
-       <tr>
-        <td>Доступно для парсинга</td>
-         <td id="urlpages"><?= $count_page; ?>&nbsp;страниц</td>     
-      </tr>
+
         <tr>
         <td>Статус</td>
          <td id="status"> </td>     
       </tr>
       
         <tr>
-        <td>Собрано ссылок</td>
-         <td id="colected"> 0 </td>     
+        <td>Отправлено запросов</td>
+         <td id="send"> 0 </td>     
       </tr>
         <tr>
-        <td>Добавлено в базу</td>
+        <td>Пришло ответов</td>
+         <td id="res">0</td>     
+      </tr>
+      
+        <tr>
+        <td>Собрано</td>
          <td id="welldone">0</td>     
+      </tr>
+      
+           <tr>
+        <td>Количество обєектов на страничке LIMIT 10 20 30 50 100</td>
+           <td> 
+           <label for="limit" class="pull-left"  > </label>  <input max="100" min="10" style="max-width: 80px;  text-align: center; " class="pull-left" value="10" type="number" class="form-control" id="limit"/>
+      
+            
+           </td> 
+             
       </tr>
       
       
        <tr>
         <td>Количество страниц для парсинга</td>
            <td> 
-           <label for="from_count_pages" class="pull-left"  > От </label>  <input max="999" min="0" style="max-width: 80px;  text-align: center; " class="pull-left" value="0" type="number" class="form-control" id="from_count_pages"/>
-          <input style="max-width: 80px;  text-align: center; " class="pull-right" value="5" max="1000" min="1" type="number" class="form-control" id="count_pages"/>       <label for="count_pages" class="pull-right"  > До </label>
+           <label for="from_count_pages" class="pull-left"  > От </label>  <input   min="0" style="max-width: 80px;  text-align: center; " class="pull-left" value="0" type="number" class="form-control" id="from"/>
+          <input style="max-width: 80px;  text-align: center; " class="pull-right" value="5"  min="1" type="number" class="form-control" id="to"/>       <label for="count_pages" class="pull-right"  > До </label>
             
            </td> 
              
@@ -68,7 +81,7 @@ use yii\helpers\Url;
       
        <tr>
         <td>Интервалы запросов (сек.)</td>
-           <td> <input style="max-width: 80px;  text-align: center;" value="3" type="number" class="form-control" id="time_limit"/></td> 
+           <td> <input style="max-width: 80px;  text-align: center;" value="4" type="number" class="form-control" id="time_limit"/></td> 
              
       </tr>
       
@@ -115,10 +128,15 @@ $this->registerJs("$('#btnparse').click(timer_parse_urls_start);", \yii\web\View
 
 var timerId;
 var timerIdParse;
-var timer_url_colect_tik;  // add to page
+var timer_url_colect_tik=0;  // add to page
    var  interval_tick =   $('#time_limit').val()*1000;
 
 var page_limit=$('#count_pages').val();
+var page=0;
+
+
+var send= 0;
+var res= 0;
 
 
 
@@ -130,20 +148,52 @@ function btns_test_f(e){
           $link = $(e.target);
       callUrl=$link.attr('href');
           
-               $('#status').text('Test send');
+               $('#status').text('Обработка');
+               
+             
+               var from=   parseInt($('#from').val(), 10);
+                var to=  parseInt($('#to').val(), 10); 
+                interval_tick=   $('#time_limit').val()*1000;
+                timer_url_colect_tik=to-from;
+                var limit=$('#limit').val();
+                  page= from;
+                  send=0;
+                  res=0;
+                 
+                 
+            timerIdParse = setInterval(function() {  
+                
+                       if(timer_url_colect_tik-- <=0) stop();
+                
+                                                             
+                                         $('#send').text(++send);
+                       
                       ajaxRequest = $.ajax({
         type: "post",
         dataType: 'json',
         url: callUrl,
-        data:  { npage: 0, time: "23pm" } 
+        data:  { limit:limit, page:page++, npage: 0, time: "23pm" } 
         ,
      success: function(data){
         
+         $('#res').text(++res);
+        
         $('#status').text('Test success');
-        if(data['welldone']){$('#welldone').text(data['welldone']);}
+        
+            console.log('colect: ' +data['colected']);
+        if(data['colected']){
+                             var c= parseInt( $('#welldone').text());
+                             var b=parseInt(data['colected']);
+                             
+                             
+            $('#welldone').text(c+b);
+            
+            }
         if(data['stop_timer']){ stop(); }
   }
     });
+    }, interval_tick);
+    
                
 
 }
