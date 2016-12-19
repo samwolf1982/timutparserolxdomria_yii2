@@ -109,7 +109,10 @@ $floors = $db->cache(function ($db) {
    $material = $db->cache(function ($db) {
     return ArrayHelper::map( Rooms::find()->select('material')->orderBy('material')->asArray()->all(), 'material', 'material');  
 });
-
+    
+       $site = $db->cache(function ($db) {
+    return ArrayHelper::map( Rooms::find()->select('site')->orderBy('site')->asArray()->all(), 'site', 'site');  
+});
                  
 
 
@@ -127,6 +130,7 @@ $floors = $db->cache(function ($db) {
              'type'=>$type,
              'manager'=>$manager,
              'material'=>$material,
+             'site'=>$site,
             // 'site_id'=>$site_id
              
             

@@ -14,6 +14,9 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+    
+    
+   
     'i18n' => [
         'translations' => [
             'common*' => [
@@ -36,6 +39,7 @@ return [
     ],
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'cookieValidationKey' => 'какая-то строка',
         ],
         'user' => [
             'identityClass' => 'common\models\User',

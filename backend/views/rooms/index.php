@@ -156,11 +156,32 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
             
             
-                                                                                    
+             
+             
+             
             
+             
+                              [
+            'attribute'=>'site', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->site;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+   
+   'filter'=>  $site,         
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Сайт']
+        ],
+             
+             
+                                                                                    
+                        
             
            [
-           'label'=>'SITE',
+           'label'=>'Ссылка',
            'format' => 'raw',
        'value'=>function ($data) {
              return Html::a($data->site,$data->url);

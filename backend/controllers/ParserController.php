@@ -209,6 +209,26 @@ class ParserController extends \yii\web\Controller
 
       // find id
     //offer-titlebox__details
+      $bread1 = '.offer-titlebox__details em small'; 
+      $bread1a = $document->find($bread1);
+      
+       $site_id =0;
+                foreach ($bread1a as $key => $value) {
+    
+                        /*   $b1[]=trim(pq($value)->find('a')->attr('href'));*/
+                        $site_id = pq($value)->text();
+                        $site_id=preg_replace('/[^0-9]+/', '', $site_id);
+                        $site_id=intval($site_id, 10) ;
+                        break;
+                            // echo pq($value)->attr('href').PHP_EOL;
+                        }
+
+    //\Yii::info("own id: ", $site_id);
+
+
+
+
+
 
 
                 // еще одна проверка в бд на урл
@@ -237,6 +257,8 @@ class ParserController extends \yii\web\Controller
                           $contact->floors=$floors;
                           $contact->type=$type_room;
                           
+                          
+                             $contact->site_id=$site_id;
                           
                               $contact->phone='-----';
                                         
