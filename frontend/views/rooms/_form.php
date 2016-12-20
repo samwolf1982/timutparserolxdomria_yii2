@@ -68,8 +68,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date')->textInput() ?>
 
+
+
+    
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    
+    <?php 
+                if ( empty($model->manager) ||$model->manager=='********' || $model->manager==Yii::$app->user->identity->username ){    ?>
+                    
+                         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>  
+                    
+             <?php   }
+                else{
+                    
+                }
+      ?>
+    
+ 
     </div>
 
     <?php ActiveForm::end(); ?>

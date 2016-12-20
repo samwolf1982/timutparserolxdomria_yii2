@@ -95,4 +95,27 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    
+       public function actionSignup()
+    {
+        //Array ( [_csrf-frontend] => Q3ZwM05IS0wvJiB0DXk/OBwCBgs3figmdFskeikAFDlxHT15fQIsHw== [SignupForm] =>
+        // Array ( [username] => admin [email] => lorem@com.ua [password] => 11111111 ) [signup-button] => )
+        //die();
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+         
+         
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+    
 }

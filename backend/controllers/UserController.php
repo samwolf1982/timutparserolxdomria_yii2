@@ -3,8 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\User;
-use backend\models\UserSearch;
+use backend\models\User;
+use backend\models\SignupForm;
+use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -121,4 +122,27 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+          public function actionSignup()
+    {
+        //Array ( [_csrf-frontend] => Q3ZwM05IS0wvJiB0DXk/OBwCBgs3figmdFskeikAFDlxHT15fQIsHw== [SignupForm] =>
+        // Array ( [username] => admin [email] => lorem@com.ua [password] => 11111111 ) [signup-button] => )
+        //die();
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+         
+         
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+    
+    
 }
