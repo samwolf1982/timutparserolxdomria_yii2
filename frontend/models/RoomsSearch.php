@@ -108,7 +108,21 @@ class RoomsSearch extends Rooms
                             $query->andFilterWhere([$operator,'site_id', $views]);
                       }
            
+                        if(preg_match('/\|/', $this->description) ){
+                     
+                             $art=  explode('|',$this->description) ;
+                             
+                             foreach($art as $v ){
+          $query ->orFilterWhere(['like', 'description', $v])   ;   
+                                
+                             }
+                            }else{
+          $query->andFilterWhere(['like', 'description', $this->description]);    
+                            }    
+                           
            
+           
+
         
         
         
@@ -136,7 +150,7 @@ class RoomsSearch extends Rooms
             ->andFilterWhere(['like', 'district', $this->district])
             ->andFilterWhere(['like', 'street', $this->street])
             ->andFilterWhere(['like', 'street2', $this->street2])
-            ->andFilterWhere(['like', 'description', $this->description])
+           // ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'own_or_business', $this->own_or_business])
             ->andFilterWhere(['like', 'manager', $this->manager])
@@ -144,6 +158,8 @@ class RoomsSearch extends Rooms
             ->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'site', $this->site])
             ->andFilterWhere(['like', 'date', $this->date])
+        
+            
         
                
            ->andFilterWhere(['like', 'material', $this->material])

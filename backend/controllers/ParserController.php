@@ -226,8 +226,51 @@ class ParserController extends \yii\web\Controller
     //\Yii::info("own id: ", $site_id);
 
 
+              // phone
+              
+              $bread1 = '.contact-button.link-phone'; 
+      $bread1a = $document->find($bread1);
+      
+       $phone ='-----';
+                foreach ($bread1a as $key => $value) {
+    
+                        /*   $b1[]=trim(pq($value)->find('a')->attr('href'));*/
+                        $phone = pq($value)->attr('class');;
+                      //  $site_id=preg_replace('/[^0-9]+/', '', $site_id);
+//                        $site_id=intval($site_id, 10) ;
+                      $phone= $this->search_phone_id($phone);
+                      
+                      
+                    // \Yii::info("own: ",$p);
+                    
+                     //  die();
+                         if(!is_null($phone)){
+                            // go to post
+                           // 
+                          $tel_url="https://www.olx.ua/ajax/misc/contact/phone/{$phone}/";
+                          $responce_olx = @file_get_contents($tel_url,true);
+               if( !$responce_olx   ){$responce_olx='empty responce BAD !!';
+                                      $phone='-----';   }
+                         else{
+                              $obj=json_decode($responce_olx);
+                           //    $phone=$obj->value;
+                              
+                            //  <span class="block">048 771 9632</span> <span class="block">098 767 8897</span> <span class="block">093 505 8933</span> 
+                             $phone=$this-> parse_responce_phone($obj->value);                            
+                         } 
+                            
+                            
+                            
+                         }  else{
+                            $phone='-----';
+                         }   
+               
+                    
 
-
+                          
+                        break;
+                            // echo pq($value)->attr('href').PHP_EOL;
+                        }
 
 
 
@@ -260,7 +303,7 @@ class ParserController extends \yii\web\Controller
                           
                              $contact->site_id=$site_id;
                           
-                              $contact->phone='-----';
+                              $contact->phone=$phone;
                                         
                if($square==0 || empty($square)||empty($path_site['price'])){$price_m=0;}
                else{
@@ -659,5 +702,38 @@ Yii::$app->session->set('welldone', 0); // сколько собрано обї�
 Yii::$app->session->set('datapage', 0); // все урли + цена замена для all_urls
 
 }
+
+
+public function search_phone_id($str) {
+
+preg_match("~'id':'(.*)',~",$str,$out);
+
+
+return isset($out[1])? $out[1]: null;
+
+
+}
+
+function parse_responce_phone($str) {
+
+     //  <span class="block">048 771 9632</span> <span class="block">098 767 8897</span> <span class="block">093 505 8933</span> 
+     
+     if(strlen($str)>15) {
+//      preg_match("~'id':'(.*)',~",$str,$out);
+ preg_match_all('~<span class="block">(\d\d\d \d\d\d \d\d\d\d)</span>~',$str,$out);
+
+ var_dump($out);
+       $tel='';
+      if(count($out)>1)
+      foreach ($out[1] as $k => $v) {
+           // if($k!=0)
+            $tel.= preg_replace('/[^0-9]+/','', $v).'|';
+        }
+         return $tel;
+
+}
+          return  preg_replace('/[^0-9]+/','', $str);
+         
+   }                    
 
 }

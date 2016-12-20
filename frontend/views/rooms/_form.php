@@ -42,16 +42,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'state')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'coment')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'material')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'own_or_business')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'manager')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'manager')->textInput(['readonly' => true, 'value' => Yii::$app->user->identity->username]) ?>
+    
+     <?=  $form->field($model, 'state')->dropDownList([
+    'Перезвонить' => 'Перезвонить',
+    'Не сотрудничает' => 'Не сотрудничает',
+    'Продано'=>'Продано',
+    
+    'Что-то еще'=>'Что-то еще',
+]) ?>
 
-    <?= $form->field($model, 'coment')->textInput(['maxlength' => true]) ?>
-
+    <?php // $form->field($model, 'coment')->textInput(['maxlength' => true]) ?>
+            
     <?php  // $form->field($model, 'url')->textarea(['rows' => 6]) ?>
 
     <?php // $form->field($model, 'site')->textInput(['maxlength' => true]) ?>

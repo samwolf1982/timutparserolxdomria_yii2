@@ -411,11 +411,25 @@ $this->params['breadcrumbs'][] = $this->title;
             
             
             
-            'state'
+           
+                                [
+            'attribute'=> 'state', 
+            'width'=>'250px',
+            'value'=>function ($model, $key, $index, $widget) { 
+                return $model->state;
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+           // 'filter'=>ArrayHelper::map(Rooms::find()->select('own_or_business')->orderBy('own_or_business')->asArray()->all(), 'own_or_business', 'own_or_business'), 
+            'filter'=>$state,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>'Any category']
+        ],
             
             
             
-            ,
+            
                       [
             'attribute'=>'own_or_business', 
             'width'=>'250px',

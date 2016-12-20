@@ -58,9 +58,9 @@ use yii\helpers\Url;
       </tr>
       
            <tr>
-        <td>Количество обєектов на страничке LIMIT 10 20 30 50 100</td>
+        <td>Количество объэктов на страничке LIMIT 10 20 30 50 100</td>
            <td> 
-           <label for="limit" class="pull-left"  > </label>  <input max="100" min="10" style="max-width: 80px;  text-align: center; " class="pull-left" value="10" type="number" class="form-control" id="limit"/>
+           <label for="limit" class="pull-left"  > </label>  <input max="100" min="10" style="max-width: 80px;  text-align: center; " class="pull-left" value="20" type="number" class="form-control" id="limit"/>
       
             
            </td> 
@@ -72,7 +72,7 @@ use yii\helpers\Url;
         <td>Количество страниц для парсинга</td>
            <td> 
            <label for="from_count_pages" class="pull-left"  > От </label>  <input   min="0" style="max-width: 80px;  text-align: center; " class="pull-left" value="0" type="number" class="form-control" id="from"/>
-          <input style="max-width: 80px;  text-align: center; " class="pull-right" value="5"  min="1" type="number" class="form-control" id="to"/>       <label for="count_pages" class="pull-right"  > До </label>
+          <input style="max-width: 80px;  text-align: center; " class="pull-right" value="50"  min="1" type="number" class="form-control" id="to"/>       <label for="count_pages" class="pull-right"  > До </label>
             
            </td> 
              
@@ -81,7 +81,7 @@ use yii\helpers\Url;
       
        <tr>
         <td>Интервалы запросов (сек.)</td>
-           <td> <input style="max-width: 80px;  text-align: center;" value="4" type="number" class="form-control" id="time_limit"/></td> 
+           <td> <input style="max-width: 80px;  text-align: center;" value="8" type="number" class="form-control" id="time_limit"/></td> 
              
       </tr>
       
@@ -101,11 +101,11 @@ use yii\helpers\Url;
 
 
 <?php Pjax::end(); ?>   
-<?= Html::a("TEST", ['parserdomria/testdata'], [ 'id'=>'btns_test','class' => 'btn btn-lg btn-primary ']) ?>
+<?= Html::a("Парсинг", ['parserdomria/testdata'], [ 'id'=>'btns_test','class' => 'btn btn-lg btn-primary ']) ?>
 
-   <?= Html::a("Сбор урлов", ['parser/colecturls'], ['id'=>'btns', 'class' => 'btn btn-lg btn-primary ']) ?>
-    <?= Html::a("Парсинг", ['parser/pars'], ['id'=>'btnparse', 'class' => 'btn btn-lg btn-success ']) ?>
-    <?= Html::a("Stop", ['parser/colecturls'], ['id'=>'btnstop', 'class' => 'btn btn-lg btn-danger ']) ?>
+   <?php  //Html::a("Сбор урлов", ['parser/colecturls'], ['id'=>'btns', 'class' => 'btn btn-lg btn-primary ']) ?>
+    <?php  //Html::a("Парсинг", ['parser/pars'], ['id'=>'btnparse', 'class' => 'btn btn-lg btn-success ']) ?>
+    <?php  //Html::a("Stop", ['parser/colecturls'], ['id'=>'btnstop', 'class' => 'btn btn-lg btn-danger ']) ?>
     </div>
 <div class="ddd">
 <?php
