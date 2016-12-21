@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
            
 
                   [
-            'attribute'=>'id', 
+            'attribute'=>'site_id', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
             'contentOptions' => 
