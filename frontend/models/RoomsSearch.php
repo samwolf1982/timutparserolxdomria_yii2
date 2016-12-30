@@ -108,6 +108,8 @@ class RoomsSearch extends Rooms
                             $query->andFilterWhere([$operator,'site_id', $views]);
                       }
            
+           
+           
                         if(preg_match('/\|/', $this->description) ){
                      
                              $art=  explode('|',$this->description) ;
@@ -118,8 +120,36 @@ class RoomsSearch extends Rooms
                              }
                             }else{
           $query->andFilterWhere(['like', 'description', $this->description]);    
+                            }   
+                            
+                            /////////////// 
+                                  if(preg_match('/\|/', $this->shortdistrict) ){
+                     
+                             $art=  explode('|',$this->shortdistrict) ;
+                             
+                             foreach($art as $v ){
+          $query ->orFilterWhere(['like', 'shortdistrict', $v])   ;   
+                                
+                             }
+                            }else{
+          $query->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict]);    
                             }    
-                           
+                            
+                  ////////////
+                  
+                          ///////////////  ---------------  street2
+                                  if(preg_match('/\|/', $this->street2) ){
+                     
+                             $art=  explode('|',$this->street2) ;
+                             
+                             foreach($art as $v ){
+          $query ->orFilterWhere(['like', 'street2', $v])   ;   
+                                
+                             }
+                            }else{
+          $query->andFilterWhere(['like', 'street2', $this->street2]);    
+                            }    
+                                     
            
            
 
@@ -143,13 +173,14 @@ class RoomsSearch extends Rooms
         ]);
         
 
-        $query->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
-            ->andFilterWhere(['like', 'phone', $this->phone])
+      //  $query->andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
+        //andFilterWhere(['like', 'shortdistrict', $this->shortdistrict])
+             $query->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'currency', $this->currency])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'district', $this->district])
             ->andFilterWhere(['like', 'street', $this->street])
-            ->andFilterWhere(['like', 'street2', $this->street2])
+            //->andFilterWhere(['like', 'street2', $this->street2])
            // ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'own_or_business', $this->own_or_business])
